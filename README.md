@@ -1,0 +1,2 @@
+# Multi-vendor-DVR-NVR-Digital-Forensics-Analysis-Tool
+Description The proposed solution aims to overcome challenges such as non-standard forensic acquisition methods, proprietary file systems and video formats, difficulty in recovering deleted or damaged recordings, inconsistent timestamps, limited event correlation across cameras, challenges in maintaining chain of custody, dependence on multivendors
