@@ -38,6 +38,17 @@ class ForensicRouter {
     let routeParts = hash.split('/');
     let primaryRoute = routeParts[0];
 
+    if (primaryRoute === 'ai-chatbot') {
+      this.navigate('ai-analysis');
+      setTimeout(() => {
+        const chatSec = document.getElementById('ai-chatbot-section');
+        if (chatSec) chatSec.scrollIntoView({ behavior: 'smooth' });
+        const chatInp = document.getElementById('embedded-chatbot-input') || document.getElementById('chatbot-input');
+        if (chatInp) chatInp.focus();
+      }, 100);
+      return;
+    }
+
     if (!this.validRoutes.includes(primaryRoute)) {
       primaryRoute = this.defaultRoute;
     }

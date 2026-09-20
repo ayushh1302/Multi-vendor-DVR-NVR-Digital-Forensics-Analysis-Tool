@@ -88,6 +88,10 @@
           </span>
           <span id="theme-toggle-label">Light</span>
         </button>
+
+        <div id="header-auth-status">
+          <a href="#login" class="btn btn-outline btn-sm">Sign In</a>
+        </div>
       </nav>
     </div>
   </header>
@@ -113,7 +117,7 @@
               Forensic-grade acquisition, recovery, and analysis of surveillance evidence across Dahua, Hikvision, CP Plus, Honeywell, TP-Link, Godrej, Uniview, Matrix, and other major OEMs — in a single unified workflow.
             </p>
             <div class="hero-actions reveal delay-3">
-              <a href="#demo" class="btn btn-primary" id="hero-btn-demo">Open Forensic Lab</a>
+              <a href="#contact" class="btn btn-primary" id="hero-btn-demo">Request Demo</a>
               <a href="#docs" class="btn btn-secondary" id="hero-btn-docs">Read Documentation</a>
             </div>
           </div>
@@ -601,15 +605,18 @@
                 <span style="color: var(--text-dim);">/</span>
                 <span style="color: var(--text-muted);">WRITE-BLOCK: LOCKED</span>
               </div>
+              <div>
+                <a href="#contact" class="btn btn-outline btn-sm">Request Full Demo</a>
+              </div>
             </div>
 
             <!-- Workstation Mode Switcher Tabs -->
             <div class="demo-nav-tabs">
               <button type="button" class="demo-tab-btn active" id="tab-btn-analysis" data-tab="tab-content-analysis">
-                <span>Ingest & Video Analysis Player</span>
+                <span>🔬 Ingest & Video Analysis Player</span>
               </button>
               <button type="button" class="demo-tab-btn" id="tab-btn-imaging" data-tab="tab-content-imaging">
-                <span>Create Forensic Image</span>
+                <span>⚡ Create Forensic Image (Bitstream Acquisition)</span>
                 <span class="badge badge-warning" style="font-size: 9px; margin-left: 6px;">WRITE-BLOCKED</span>
               </button>
             </div>
@@ -629,7 +636,7 @@
                   <button type="button" class="preset-chip" data-preset="dahua">Dahua DH-XVR5108HS (2TB)</button>
                   <button type="button" class="preset-chip" data-preset="hikvision">Hikvision DS-7208HQHI (1TB)</button>
                   <button type="button" class="preset-chip" data-preset="cpplus">CP Plus CP-UVR-0801E1 (2TB)</button>
-                  <button type="button" class="preset-chip" id="chip-switch-imaging" style="border-color: #FBBF24; color: #FBBF24;">Create Forensic Image (.dd/.E01)</button>
+                  <button type="button" class="preset-chip" id="chip-switch-imaging" style="border-color: #FBBF24; color: #FBBF24;">⚡ Create Forensic Image (.dd/.E01)</button>
                 </div>
               </div>
 
@@ -830,8 +837,8 @@
                     <h4 style="font-size: var(--text-md); font-weight: 600;">Deep Binary Cluster Carving & Video Extraction</h4>
                   </div>
                   <div style="display: flex; gap: var(--space-2); align-items: center;">
-                    <button type="button" class="btn btn-secondary btn-sm" id="btn-extract-all-carved">Extract All Sub-Clips</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="btn-run-deep-carve">Run Deep Carve</button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-extract-all-carved">⚡ Extract All Sub-Clips</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="btn-run-deep-carve">▶ Run Deep Carve</button>
                   </div>
                 </div>
 
@@ -946,7 +953,7 @@
                     Target Destination: <span id="imaging-target-dest" style="color: var(--text-primary);">/evidence/CASE-2026-DH-8491_Acquisition.dd</span>
                   </div>
                   <button type="button" class="btn btn-primary" id="btn-start-imaging" style="padding: 8px 24px; font-weight: 600;">
-                    Start Bitstream Acquisition
+                    ⚡ Start Bitstream Acquisition (Create Forensic Image)
                   </button>
                 </div>
 
@@ -1005,13 +1012,13 @@
                   <!-- Action Buttons -->
                   <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2);">
                     <button type="button" class="btn btn-primary btn-sm" id="btn-download-created-image" style="flex: 1;">
-                      Download Forensic Image (.dd)
+                      ⬇ Download Created Forensic Image (.dd)
                     </button>
                     <button type="button" class="btn btn-secondary btn-sm" id="btn-download-imaging-cert" style="flex: 1;">
                       Export Acquisition Certificate (.txt)
                     </button>
-                    <button type="button" class="btn btn-secondary btn-sm" id="btn-mount-in-analysis" style="flex: 1;">
-                      Mount in Analysis Player
+                    <button type="button" class="btn btn-warning btn-sm" id="btn-mount-in-analysis" style="flex: 1; background: rgba(251, 191, 36, 0.15); border-color: #FBBF24; color: #FBBF24;">
+                      🔬 Mount Directly in Analysis Player
                     </button>
                   </div>
                 </div>
@@ -1024,28 +1031,51 @@
     <!-- -----------------------------------------------------------------------
          PAGE 5.5: AI-BASED FORENSIC VIDEO INTELLIGENCE MODULE
          ----------------------------------------------------------------------- -->
-    <!-- -----------------------------------------------------------------------
-         PAGE 5.5: AI-BASED FORENSIC VIDEO INTELLIGENCE MODULE
-         ----------------------------------------------------------------------- -->
     <section id="view-ai-analysis" class="view-section" style="display: none;">
       <div class="page-section">
         <div class="container">
           <div class="section-header reveal">
-            <span class="section-label">Computer Vision Forensics</span>
-            <h1 class="section-title">AI Video Analysis</h1>
+            <span class="section-label">Machine Learning & Computer Vision Forensics</span>
+            <h1 class="section-title">AI-Powered Forensic Video Intelligence Studio</h1>
             <p class="section-desc">
-              Automated object detection, confidence scoring, and license plate recognition with synchronized UTC timecodes.
+              Deterministic, non-hallucinatory computer vision models for automated object detection, multi-camera re-identification (Re-ID), optical character recognition (LPR/ANPR), velocity telemetry, and temporal tamper anomaly scoring under FRE 902(14).
             </p>
           </div>
 
-          <!-- Main AI Studio Layout -->
+          <!-- AI Model & Integrity Ribbon (Grey and White) -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: var(--space-4) var(--space-6); margin-bottom: var(--space-6); backdrop-filter: blur(12px);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); font-family: var(--font-mono); font-size: var(--text-xs);">
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">NEURAL INFERENCE BACKEND</span>
+                <strong style="color: #FFFFFF;">YOLOv8x-Forensics + ByteTrack + PaddleOCR</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">ENTITIES DETECTED</span>
+                <strong id="ai-stat-objects" style="color: #FFFFFF;">48 Targets (28 Persons, 14 Vehicles, 6 Plates)</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">INFERENCE CONFIDENCE</span>
+                <strong id="ai-stat-confidence" style="color: #FFFFFF;">96.8% Mean (Deterministic Weights)</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">TAMPER ANOMALY SCORE</span>
+                <strong id="ai-stat-tamper" style="color: #CBD5E1;">99.8% Nominal (0 Occlusions)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main AI Studio Layout (Fluid, No Rigid Square Boxes) -->
           <div class="ai-studio-grid">
             <!-- Left: Live AI Inference Viewport -->
             <div class="ai-player-panel" style="border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02);">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3);">
                 <div style="display: flex; align-items: center; gap: var(--space-2);">
-                  <span class="badge" id="ai-status-indicator" style="background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2);">LIVE AI TRACKING</span>
-                  <span style="font-family: var(--font-mono); font-size: 11px; color: #94A3B8;" id="ai-fps-counter">60.0 FPS</span>
+                  <span class="badge" id="ai-status-indicator" style="background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2);">● LIVE AI TRACKING ACTIVE</span>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: #94A3B8;" id="ai-fps-counter">60.0 FPS • TENSOR-RT ENGINE</span>
+                </div>
+                <div style="display: flex; gap: var(--space-2);">
+                  <button type="button" class="btn btn-outline btn-sm" id="btn-ai-pause" style="padding: 2px 10px; font-size: 11px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">⏸ Pause</button>
+                  <button type="button" class="btn btn-outline btn-sm" id="btn-ai-export-snapshot" style="padding: 2px 10px; font-size: 11px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">📷 Save AI Frame</button>
                 </div>
               </div>
 
@@ -1068,28 +1098,59 @@
                 <video id="ai-studio-video" class="ai-viewport-video" playsinline controls loop muted autoplay style="display: none;"></video>
               </div>
 
-              <!-- AI Visual Toggles Toolbar -->
+              <!-- AI Visual Toggles Toolbar (Grey and White) -->
               <div class="ai-toggles-bar">
-                <button type="button" class="ai-chip-toggle active" id="toggle-ai-boxes">Detection Markers</button>
-                <button type="button" class="ai-chip-toggle active" id="toggle-ai-labels">Confidence %</button>
-                <button type="button" class="ai-chip-toggle active" id="toggle-ai-plates">License Plate OCR</button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-boxes">
+                  <span>✓</span> Target Markers
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-labels">
+                  <span>✓</span> Confidence %
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-vectors">
+                  <span>✓</span> Velocity Vectors
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-plates">
+                  <span>✓</span> License Plate OCR
+                </button>
+                <button type="button" class="ai-chip-toggle" id="toggle-ai-heatmap">
+                  <span>○</span> Motion Heatmap
+                </button>
+                <button type="button" class="ai-chip-toggle" id="toggle-ai-blur">
+                  <span>○</span> Privacy Face Blur
+                </button>
               </div>
             </div>
 
-            <!-- Right: Detected Targets & Chronological Feed -->
+            <!-- Right: AI Intelligence Controls & Live Chronological Event Stream -->
             <div class="ai-controls-panel" style="border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02);">
               <div class="ai-panel-title">
-                <span style="color: #FFFFFF;">Detected Targets</span>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: #94A3B8;" id="ai-filter-count">48 Events</span>
+                <span style="color: #FFFFFF;">AI Target Classification & Telemetry</span>
+                <span class="badge badge-outline" style="font-size: 10px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">BYTE-TRACK 3D</span>
+              </div>
+
+              <!-- Model Selector -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Active Model Architecture</label>
+                <select class="imaging-select" id="ai-model-select" style="padding: 6px 10px; font-size: 11px; background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15);">
+                  <option value="yolo8_forensics">YOLOv8x-Forensics (Weights Hash: e3b0c442...)</option>
+                  <option value="anpr_lpr">PaddleOCR + LPRNet (Automated Number Plate Recognition)</option>
+                  <option value="biometric_arcface">ArcFace Biometric Re-Identification (ISO/IEC 19794)</option>
+                  <option value="tamper_optical">Dense Optical Flow (Anti-Tamper Occlusion Sensor)</option>
+                </select>
               </div>
 
               <!-- Filter Tabs -->
               <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase;">Real-Time Entity Feed</span>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: #E2E8F0;" id="ai-filter-count">Showing 48 Events</span>
+                </div>
                 <div class="ai-filter-tabs" id="ai-filter-tabs">
                   <button type="button" class="ai-filter-tab active" data-filter="all">All (48)</button>
                   <button type="button" class="ai-filter-tab" data-filter="person">Persons (28)</button>
                   <button type="button" class="ai-filter-tab" data-filter="vehicle">Vehicles (14)</button>
                   <button type="button" class="ai-filter-tab" data-filter="plate">Plates (6)</button>
+                  <button type="button" class="ai-filter-tab" data-filter="tamper">Tamper (2)</button>
                 </div>
               </div>
 
@@ -1097,58 +1158,67 @@
               <div class="ai-event-feed" id="ai-event-feed">
                 <!-- Dynamically populated -->
               </div>
+
+              <!-- Action Buttons -->
+              <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: auto; padding-top: var(--space-2); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                <button type="button" class="btn btn-primary btn-sm" id="btn-export-ai-report" style="width: 100%;">
+                  ⬇ Export Certified AI Forensic Report (.txt / FRE 902)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-export-ai-json" style="width: 100%; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">
+                  Export Structured Telemetry (.json)
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- -----------------------------------------------------------------------
-         PAGE 5.6: FORENSIC AI COPILOT
-         ----------------------------------------------------------------------- -->
-    <section id="view-ai-chatbot" class="view-section" style="display: none;">
-      <div class="page-section">
-        <div class="container" style="max-width: 960px;">
-          <div class="section-header reveal">
-            <span class="section-label">Generative AI Forensics</span>
-            <h1 class="section-title">Forensic AI Assistant</h1>
-            <p class="section-desc">
-              Powered by Google Gemini. Inquire about proprietary file systems, timestamp drift calibration, unallocated carving, and FRE 902 admissibility standards.
-            </p>
-          </div>
-
-          <div class="ai-chatbot-page-card" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); overflow: hidden; backdrop-filter: blur(16px);">
-            <!-- Top status bar -->
-            <div style="padding: 12px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; background: rgba(0, 0, 0, 0.25);">
+          <!-- =====================================================================
+               INTEGRATED FORENSIC AI CHATBOT COPILOT STUDIO (EMBEDDED IN MODULE)
+               ===================================================================== -->
+          <div class="embedded-chatbot-studio" id="ai-chatbot-section" style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-4); flex-wrap: wrap; gap: var(--space-2);">
+              <div>
+                <span class="section-label" style="color: #94A3B8;">Live Generative AI Forensics</span>
+                <h2 style="font-size: var(--text-xl); font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">
+                  💬 BRUCH.DFA Forensic Copilot (Powered by Google Gemini)
+                </h2>
+                <p style="font-size: var(--text-xs); color: #94A3B8; max-width: 650px;">
+                  Connected to Google Gemini 3.6-Flash LLM. Providing real-time evidentiary analysis for DVR/NVR filesystems, unallocated cluster carving, presentation timecode calibration, and FRE 902(13)/(14) self-authenticating records.
+                </p>
+              </div>
               <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" class="btn btn-outline btn-sm" id="embedded-btn-set-key" style="padding: 2px 10px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">🔑 API Key</button>
                 <span class="chatbot-pulse-dot"></span>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: #FFFFFF;">Gemini Online</span>
-              </div>
-              <button type="button" class="btn btn-outline btn-sm" id="page-btn-set-key" style="padding: 2px 10px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">API Key</button>
-            </div>
-
-            <!-- Suggestion chips (Clean, no emojis) -->
-            <div class="page-chat-chips" id="page-chat-chips" style="padding: 10px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); display: flex; gap: 8px; overflow-x: auto; white-space: nowrap;">
-              <button type="button" class="chatbot-chip page-chat-chip" data-query="How does timestamp normalization work under ISO/IEC 27037?">Timestamp Normalization</button>
-              <button type="button" class="chatbot-chip page-chat-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">FRE 902 Admissibility</button>
-              <button type="button" class="chatbot-chip page-chat-chip" data-query="How is unallocated slack space carved in surveillance DVRs?">Carved Slack Space</button>
-              <button type="button" class="chatbot-chip page-chat-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">Active Case Integrity</button>
-              <button type="button" class="chatbot-chip page-chat-chip" data-query="How do I inspect H.264 NAL keyframe headers (0x0000000167)?">H.264 Keyframes</button>
-            </div>
-
-            <!-- Messages Container -->
-            <div class="page-chat-messages" id="page-chat-messages" style="height: 440px; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px;">
-              <div class="chat-bubble chat-bubble-bot">
-                Greetings Examiner. I am the <strong>BRUCH.DFA Forensic Assistant</strong>, connected to <strong>Google Gemini</strong>.
-                <br><br>
-                I can assist with inquiries regarding proprietary surveillance file systems (Dahua DHFS, Hikvision HikFS), unallocated keyframe carving, presentation timestamp (PTS) drift normalization, and chain-of-custody self-authentication under <strong>FRE 902(13)/(14)</strong>.
+                <span class="badge" style="background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); font-size: 10px; padding: 2px 8px;">● LIVE GEMINI LLM ONLINE</span>
               </div>
             </div>
 
-            <!-- Input Bar -->
-            <div style="padding: 14px 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: rgba(0, 0, 0, 0.35); display: flex; gap: 10px;">
-              <input type="text" class="chatbot-input" id="page-chat-input" placeholder="Type a forensic question or command..." autocomplete="off" style="flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-sm); padding: 10px 14px; color: #FFFFFF; font-size: var(--text-xs); outline: none;">
-              <button type="button" class="btn btn-primary btn-sm" id="page-chat-send-btn" style="padding: 0 20px; font-weight: 600;">Send</button>
+            <!-- Embedded Chat Box -->
+            <div class="embedded-chat-box" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius-md); overflow: hidden; backdrop-filter: blur(16px);">
+              <!-- Quick Prompt Chips -->
+              <div class="embedded-chips-bar" id="embedded-chips-bar" style="padding: 10px 14px; background: rgba(0, 0, 0, 0.35); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 8px; overflow-x: auto; white-space: nowrap;">
+                <button type="button" class="chatbot-chip embedded-chip" data-query="How does timestamp normalization work in court under ISO 27037?">⏱️ Timestamp Normalization</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">⚖️ FRE 902 Admissibility</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="What is carved unallocated slack space in surveillance DVRs?">🧩 Carved Slack Space</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">🔍 Analyze Active Case</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="How do I inspect H.264 NAL keyframes (SPS/PPS 0x0000000167)?">🎥 Inspect H.264 NAL Headers</button>
+              </div>
+
+              <!-- Messages History -->
+              <div class="embedded-chat-messages" id="embedded-chat-messages" style="height: 340px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <div class="chat-bubble chat-bubble-bot">
+                  Greetings Examiner. I am the <strong>BRUCH.DFA Forensic Copilot</strong>, powered live by <strong>Google Gemini 3.6-Flash LLM</strong>.
+                  <br><br>
+                  Your Gemini API key is activated and running. I can conduct in-depth forensic evaluations on DVR/NVR proprietary structures (Dahua DHFS, Hikvision HikFS), unallocated keyframe carving, presentation timestamp (PTS) drift normalization, and chain-of-custody self-authentication under <strong>FRE 902(13)/(14)</strong>.
+                  <br><br>
+                  Click any prompt chip above or ask any digital forensics question below!
+                </div>
+              </div>
+
+              <!-- Chat Input Bar -->
+              <div class="embedded-chat-input-row" style="padding: 12px 14px; background: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 8px;">
+                <input type="text" class="chatbot-input" id="embedded-chat-input" placeholder="Ask a forensic question or case query..." autocomplete="off" style="flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-sm); padding: 8px 12px; color: #FFFFFF; font-size: var(--text-xs); outline: none;">
+                <button type="button" class="btn btn-primary btn-sm" id="embedded-chat-send-btn" style="padding: 0 18px; font-weight: 600;">Ask Copilot</button>
+              </div>
             </div>
           </div>
         </div>
@@ -2079,8 +2149,8 @@ print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
           <div class="carved-modal-scrubber-fill" id="carved-modal-scrub-fill"></div>
         </div>
         <div style="display: flex; gap: var(--space-2); margin-top: 4px; align-items: center;">
-          <button type="button" class="ctrl-btn active" id="carved-play-pause-btn" style="padding: 2px 8px; font-size: 11px;">Pause</button>
-          <button type="button" class="ctrl-btn" id="carved-replay-btn" style="padding: 2px 8px; font-size: 11px;">Replay Slice</button>
+          <button type="button" class="ctrl-btn active" id="carved-play-pause-btn" style="padding: 2px 8px; font-size: 11px;">⏸ Pause</button>
+          <button type="button" class="ctrl-btn" id="carved-replay-btn" style="padding: 2px 8px; font-size: 11px;">⏮ Replay Slice</button>
           <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-left: auto;">AUTO-LOOPING SLICE</span>
         </div>
       </div>
@@ -2112,7 +2182,7 @@ print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
       <!-- Action Buttons -->
       <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
         <button type="button" class="btn btn-primary btn-sm" id="btn-download-carved-clip" style="flex: 1;">
-          Download Recovered MP4 Clip
+          ⬇ Download Recovered MP4 Clip
         </button>
         <button type="button" class="btn btn-secondary btn-sm" id="btn-download-carved-cert" style="flex: 1;">
           Export Fragment Certificate
@@ -2136,12 +2206,31 @@ print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
       <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
         <a href="#privacy" style="color: var(--text-muted); font-size: var(--text-xs);">Privacy Policy</a>
         <a href="#terms" style="color: var(--text-muted); font-size: var(--text-xs);">Terms & Conditions</a>
+        <a href="#login" style="color: var(--text-muted); font-size: var(--text-xs);">Examiner Portal</a>
       </div>
       <div>
         Compliant with ISO/IEC 27037:2012 & FRE 902(13)/(14)
       </div>
     </div>
   </footer>
+
+  <!-- =========================================================================
+       COOKIE & EVIDENTIARY SESSION CONSENT BANNER
+       ========================================================================= -->
+  <div class="cookie-consent-bar" id="cookie-consent-banner" role="region" aria-label="Evidentiary Session Consent">
+    <div class="container cookie-bar-container">
+      <div class="cookie-text-block">
+        <div class="cookie-title">Evidentiary & Cryptographic Session Consent</div>
+        <p class="cookie-desc">
+          This workstation utilizes essential cryptographic session tokens and local storage artifacts to preserve chain of custody, verify investigator credentials, and enforce ISO/IEC 27037:2012 non-tampering compliance. Zero third-party marketing cookies or external tracking scripts are deployed.
+        </p>
+      </div>
+      <div class="cookie-actions-group">
+        <button type="button" class="btn btn-primary btn-sm" id="btn-cookie-accept">Accept Session Tokens</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btn-cookie-essential">Essential Only</button>
+      </div>
+    </div>
+  </div>
 
   <!-- =========================================================================
        FLOATING FORENSIC AI CHATBOT WIDGET (BRUCH.DFA COPILOT)
@@ -2160,22 +2249,22 @@ print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
         <span class="chatbot-pulse-dot"></span>
         <div>
           <div class="chatbot-name">BRUCH.DFA Forensic Copilot</div>
-          <div class="chatbot-status" style="color: #CBD5E1;">● Live Gemini Connected</div>
+          <div class="chatbot-status" style="color: #CBD5E1;">● Live Gemini 3.6-Flash LLM Connected</div>
         </div>
       </div>
       <div style="display: flex; align-items: center; gap: 6px;">
-        <button type="button" class="btn btn-outline btn-sm" id="btn-set-gemini-key" style="padding: 1px 7px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">API Key</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btn-set-gemini-key" style="padding: 1px 7px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">🔑 API Key</button>
         <button type="button" class="chatbot-close-btn" id="chatbot-close-btn" aria-label="Close Chatbot">&times;</button>
       </div>
     </div>
 
     <!-- Quick Question Chips -->
     <div class="chatbot-chips-bar" id="chatbot-chips-bar">
-      <button type="button" class="chatbot-chip" data-query="How does timestamp normalization work in court under ISO 27037?">Timestamp Normalization</button>
-      <button type="button" class="chatbot-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">FRE 902 Admissibility</button>
-      <button type="button" class="chatbot-chip" data-query="What is carved unallocated slack space in surveillance DVRs?">Carved Slack Space</button>
-      <button type="button" class="chatbot-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">Active Case Analysis</button>
-      <button type="button" class="chatbot-chip" data-query="How do I inspect H.264 NAL keyframes (SPS/PPS 0x0000000167)?">H.264 Keyframes</button>
+      <button type="button" class="chatbot-chip" data-query="How does timestamp normalization work in court under ISO 27037?">⏱️ Timestamp Normalization</button>
+      <button type="button" class="chatbot-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">⚖️ FRE 902 Admissibility</button>
+      <button type="button" class="chatbot-chip" data-query="What is carved unallocated slack space in surveillance DVRs?">🧩 Carved Slack Space</button>
+      <button type="button" class="chatbot-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">🔍 Analyze Active Case</button>
+      <button type="button" class="chatbot-chip" data-query="How do I inspect H.264 NAL keyframes (SPS/PPS 0x0000000167)?">🎥 Inspect H.264 NAL Headers</button>
     </div>
 
     <!-- Chat Messages -->
@@ -2184,6 +2273,8 @@ print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
         Greetings Examiner. I am <strong>BRUCH.DFA Forensic Copilot</strong>, powered live by <strong>Google Gemini 3.6-Flash LLM</strong>.
         <br><br>
         Your Gemini API key is activated and running. I can conduct in-depth forensic evaluations on DVR/NVR proprietary structures (Dahua DHFS, Hikvision HikFS), unallocated keyframe carving, presentation timestamp (PTS) drift normalization, and chain-of-custody self-authentication under <strong>FRE 902(13)/(14)</strong>.
+        <br><br>
+        Click any prompt chip above or ask any digital forensics question below!
       </div>
     </div>
 

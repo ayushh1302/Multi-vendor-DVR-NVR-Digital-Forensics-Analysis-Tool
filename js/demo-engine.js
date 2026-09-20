@@ -1733,7 +1733,10 @@ Laboratory Verification Stamp: [BRUCH.DFA CERTIFIED FORENSIC EVIDENCE]
     const toggles = [
       { id: 'toggle-ai-boxes', key: 'boxes' },
       { id: 'toggle-ai-labels', key: 'labels' },
-      { id: 'toggle-ai-plates', key: 'plates' }
+      { id: 'toggle-ai-vectors', key: 'vectors' },
+      { id: 'toggle-ai-plates', key: 'plates' },
+      { id: 'toggle-ai-heatmap', key: 'heatmap' },
+      { id: 'toggle-ai-blur', key: 'blur' }
     ];
     toggles.forEach(t => {
       const btn = document.getElementById(t.id);
@@ -1741,6 +1744,8 @@ Laboratory Verification Stamp: [BRUCH.DFA CERTIFIED FORENSIC EVIDENCE]
         btn.addEventListener('click', () => {
           this.aiStudioState.toggles[t.key] = !this.aiStudioState.toggles[t.key];
           btn.classList.toggle('active', this.aiStudioState.toggles[t.key]);
+          const span = btn.querySelector('span');
+          if (span) span.innerText = this.aiStudioState.toggles[t.key] ? '✓' : '○';
         });
       }
     });
@@ -1755,6 +1760,28 @@ Laboratory Verification Stamp: [BRUCH.DFA CERTIFIED FORENSIC EVIDENCE]
         this.renderAiFeed();
       });
     });
+
+    // Pause button
+    const pauseBtn = document.getElementById('btn-ai-pause');
+    if (pauseBtn) {
+      pauseBtn.addEventListener('click', () => {
+        this.aiStudioState.isPlaying = !this.aiStudioState.isPlaying;
+        pauseBtn.innerText = this.aiStudioState.isPlaying ? '⏸ Pause' : '▶ Resume';
+      });
+    }
+
+    // Save snapshot
+    const snapBtn = document.getElementById('btn-ai-export-snapshot');
+    if (snapBtn) {
+      snapBtn.addEventListener('click', () => {
+        const canvas = document.getElementById('ai-studio-canvas');
+        if (!canvas) return;
+        const link = document.createElement('a');
+        link.download = `AI_Inference_Snapshot_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
 
     // Export AI Text Report (FRE 902)
     const exportReportBtn = document.getElementById('btn-export-ai-report');
@@ -1781,7 +1808,7 @@ Laboratory Verification Stamp: [BRUCH.DFA CERTIFIED FORENSIC EVIDENCE]
     });
 
     const countLabel = document.getElementById('ai-filter-count');
-    if (countLabel) countLabel.innerText = `${filtered.length} Events`;
+    if (countLabel) countLabel.innerText = `Showing ${filtered.length} Events`;
 
     filtered.forEach(ev => {
       const item = document.createElement('div');
@@ -1794,6 +1821,9 @@ Laboratory Verification Stamp: [BRUCH.DFA CERTIFIED FORENSIC EVIDENCE]
           </div>
           <div class="ai-event-sub" style="color: #94A3B8;">${ev.time} • ${ev.notes}</div>
           ${ev.plate ? `<div style="color: #CBD5E1; font-size: 10px; margin-top: 1px;">ANPR: <strong style="color: #FFFFFF;">${ev.plate}</strong> [OCR LOCKED]</div>` : ''}
+        </div>
+        <div style="text-align: right; flex-shrink: 0;">
+          <button type="button" class="btn btn-outline btn-sm" style="padding: 2px 8px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">Seek</button>
         </div>
       `;
       item.addEventListener('click', () => {
@@ -2059,33 +2089,33 @@ Examiner: BRUCH.DFA Automated Forensics Engine v2.4.0-LE
       });
     }
 
-    // 2. Dedicated Page AI Chatbot Controls (Inside #view-ai-chatbot)
-    const pageSendBtn = document.getElementById('page-chat-send-btn');
-    const pageInput = document.getElementById('page-chat-input');
-    const pageChips = document.querySelectorAll('#page-chat-chips .page-chat-chip');
+    // 2. Embedded AI Chatbot Studio Controls (Inside #view-ai-analysis)
+    const embeddedSendBtn = document.getElementById('embedded-chat-send-btn');
+    const embeddedInput = document.getElementById('embedded-chat-input');
+    const embeddedChips = document.querySelectorAll('#embedded-chips-bar .embedded-chip');
 
-    pageChips.forEach(chip => {
+    embeddedChips.forEach(chip => {
       chip.addEventListener('click', (e) => {
         const query = e.currentTarget.dataset.query;
         if (query) this.handleChatbotQuery(query);
       });
     });
 
-    if (pageSendBtn && pageInput) {
-      pageSendBtn.addEventListener('click', () => {
-        const val = pageInput.value.trim();
+    if (embeddedSendBtn && embeddedInput) {
+      embeddedSendBtn.addEventListener('click', () => {
+        const val = embeddedInput.value.trim();
         if (val) {
           this.handleChatbotQuery(val);
-          pageInput.value = '';
+          embeddedInput.value = '';
         }
       });
 
-      pageInput.addEventListener('keydown', (e) => {
+      embeddedInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          const val = pageInput.value.trim();
+          const val = embeddedInput.value.trim();
           if (val) {
             this.handleChatbotQuery(val);
-            pageInput.value = '';
+            embeddedInput.value = '';
           }
         }
       });
@@ -2102,7 +2132,7 @@ Examiner: BRUCH.DFA Automated Forensics Engine v2.4.0-LE
     };
     const keyBtn1 = document.getElementById('btn-set-gemini-key');
     if (keyBtn1) keyBtn1.addEventListener('click', handleKeyPrompt);
-    const keyBtn2 = document.getElementById('page-btn-set-key');
+    const keyBtn2 = document.getElementById('embedded-btn-set-key');
     if (keyBtn2) keyBtn2.addEventListener('click', handleKeyPrompt);
   },
 
@@ -2130,7 +2160,7 @@ Examiner: BRUCH.DFA Automated Forensics Engine v2.4.0-LE
   async handleChatbotQuery(query) {
     const containers = [
       document.getElementById('chatbot-messages'),
-      document.getElementById('page-chat-messages')
+      document.getElementById('embedded-chat-messages')
     ].filter(Boolean);
 
     if (containers.length === 0) return;
