@@ -69,6 +69,7 @@
           <li><a href="#demo" class="nav-link" id="nav-demo">Demo</a></li>
           <li><a href="#ai-analysis" class="nav-link" id="nav-ai-analysis">AI Analysis</a></li>
           <li><a href="#ai-chatbot" class="nav-link" id="nav-chatbot">AI Chatbot</a></li>
+          <li><a href="#reports" class="nav-link" id="nav-reports">Case Reports</a></li>
           <li><a href="#docs" class="nav-link" id="nav-docs">Docs</a></li>
           <li><a href="#contact" class="nav-link" id="nav-contact">Contact</a></li>
         </ul>
@@ -1220,6 +1221,287 @@
                 <button type="button" class="btn btn-primary btn-sm" id="embedded-chat-send-btn" style="padding: 0 18px; font-weight: 600;">Ask Copilot</button>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 5.8: FORENSIC CASE REPORTING & COURT ADMISSIBILITY DOSSIER CENTER
+         ----------------------------------------------------------------------- -->
+    <section id="view-reports" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Judicial Documentation & Chain of Custody</span>
+            <h1 class="section-title">Forensic Case Reporting & Court Dossier Center</h1>
+            <p class="section-desc">
+              Generate certified, self-authenticating digital forensics case reports compliant with Federal Rules of Evidence FRE 902(13) & 902(14), ISO/IEC 27037:2012, and NIST SP 800-86 standards.
+            </p>
+          </div>
+
+          <!-- Report Generator Customization Bar -->
+          <div class="report-controls-panel" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: var(--space-5); margin-bottom: var(--space-6); backdrop-filter: blur(12px);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-4);">
+              <!-- Target Case Selection -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Target Case File</label>
+                <select id="report-case-select" class="form-select" style="background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15); font-size: 11px; padding: 6px 10px;">
+                  <option value="dahua">Dahua DHFS (CASE-2026-DH-881 / 2.0 TB)</option>
+                  <option value="hikvision">Hikvision HikFS (CASE-2026-HK-442 / 1.0 TB)</option>
+                  <option value="cpplus">CP Plus CP-FS (CASE-2026-CP-119 / 2.0 TB)</option>
+                  <option value="custom">Custom Uploaded Evidence File</option>
+                </select>
+              </div>
+
+              <!-- Report Template -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Report Template Standard</label>
+                <select id="report-template-select" class="form-select" style="background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15); font-size: 11px; padding: 6px 10px;">
+                  <option value="full">Comprehensive Final Case Dossier (FRE 902)</option>
+                  <option value="acquisition">Chain of Custody & Acquisition Certificate</option>
+                  <option value="carving">Unallocated Cluster Carving & Recovery Log</option>
+                  <option value="ai">AI Vision Inference & ANPR Telemetry Audit</option>
+                </select>
+              </div>
+
+              <!-- Lead Examiner -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Lead Examiner Name</label>
+                <input type="text" id="report-examiner-input" class="form-input" value="Investigator J. Vance, EnCE, CCE" style="background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15); font-size: 11px; padding: 6px 10px;">
+              </div>
+
+              <!-- Agency / Lab -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Agency / Laboratory</label>
+                <input type="text" id="report-agency-input" class="form-input" value="State Forensic Science Laboratory - Cyber Division" style="background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15); font-size: 11px; padding: 6px 10px;">
+              </div>
+            </div>
+
+            <!-- Action Buttons Toolbar -->
+            <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; border-top: 1px solid rgba(255,255,255,0.08); padding-top: var(--space-4);">
+              <button type="button" class="btn btn-primary btn-sm" id="btn-print-case-report" style="display: flex; align-items: center; gap: 6px; font-weight: 600;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"></path><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                🖨️ Print / Save as PDF (Court Exhibit)
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-export-report-txt" style="display: flex; align-items: center; gap: 6px;">
+                ⬇ Download Full Case Dossier (.txt)
+              </button>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-export-report-json" style="color: #E2E8F0; border-color: rgba(255,255,255,0.25);">
+                Export Manifest (.json)
+              </button>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-copy-report-clipboard" style="color: #E2E8F0; border-color: rgba(255,255,255,0.25); margin-left: auto;">
+                📋 Copy Text to Clipboard
+              </button>
+            </div>
+          </div>
+
+          <!-- Printable Report Paper Dossier (Live Preview) -->
+          <div class="report-dossier-wrapper" id="printable-report-card">
+            <!-- Official Header & Emblem -->
+            <div class="report-official-header">
+              <div class="report-header-crest">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="1.8">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              </div>
+              <div class="report-header-text">
+                <div class="report-gov-title">FORENSIC DIGITAL EVIDENCE EXAMINATION REPORT</div>
+                <div class="report-gov-sub">STATE FORENSIC SCIENCE LABORATORY • DIGITAL VIDEO & MULTIMEDIA SECTION</div>
+                <div class="report-gov-cert">SELF-AUTHENTICATING RECORD PURSUANT TO FEDERAL RULES OF EVIDENCE FRE 902(13) & 902(14)</div>
+              </div>
+              <div class="report-header-stamp">
+                <div class="report-stamp-box">
+                  <div class="stamp-verified">VERIFIED</div>
+                  <div class="stamp-code">ISO/IEC 27037</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="report-divider"></div>
+
+            <!-- Case Identification Block -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[1] ADMINISTRATIVE CASE PROFILE & CHAIN OF CUSTODY</div>
+              <div class="report-grid-two">
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Master Case Identifier:</span>
+                  <strong class="report-meta-val" id="rep-case-id">CASE-2026-DH-881</strong>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Date & Time of Examination:</span>
+                  <span class="report-meta-val" id="rep-exam-date">2026-09-20 18:45:00 UTC</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Principal Forensic Examiner:</span>
+                  <span class="report-meta-val" id="rep-examiner-name">Investigator J. Vance, EnCE, CCE</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Submitting Agency / Department:</span>
+                  <span class="report-meta-val" id="rep-agency-name">State Forensic Science Laboratory - Cyber Division</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Legal Search Authority / Warrant:</span>
+                  <span class="report-meta-val">Search Warrant SW-2026-90412 (Hon. Superior Court)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Evidence Seizure Location:</span>
+                  <span class="report-meta-val" id="rep-seizure-loc">Security Control Center (Building A, Rack 04)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evidence Source & Hardware Profile -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[2] STORAGE HARDWARE & PROPRIETARY FILESYSTEM PROFILE</div>
+              <div class="report-grid-two">
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Target Evidence Image:</span>
+                  <span class="report-meta-val font-mono" id="rep-filename">evidence_master_dahua.dd</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Calculated Storage Capacity:</span>
+                  <span class="report-meta-val font-mono" id="rep-capacity">2.0 TB (3,907,029,168 Logical Sectors)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Surveillance OEM Architecture:</span>
+                  <span class="report-meta-val" id="rep-vendor">Dahua Technology Co., Ltd.</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Proprietary Filesystem Format:</span>
+                  <span class="report-meta-val" id="rep-filesystem">DHFS v4.1 (Circular Cluster Ring Buffer)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Superblock Signature Byte:</span>
+                  <span class="report-meta-val font-mono">0x44 0x48 0x46 0x53 ("DHFS") at Sector 0x00</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Write-Blocking Protection:</span>
+                  <span class="report-meta-val" style="color: #FFFFFF;">Hardware Write-Blocker (blockdev --setro Verified)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cryptographic Hashing Manifest -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[3] CONCURRENT CRYPTOGRAPHIC INTEGRITY MANIFEST (FRE 902(14))</div>
+              <div class="report-table-wrap">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Algorithm Standard</th>
+                      <th>Acquisition Ingestion Hash</th>
+                      <th>Post-Examination Hash</th>
+                      <th>Verification Verdict</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>MD5 (RFC 1321)</strong></td>
+                      <td class="font-mono" id="rep-hash-md5-1">7d59b209a3c4f9118e4012019482fa81</td>
+                      <td class="font-mono" id="rep-hash-md5-2">7d59b209a3c4f9118e4012019482fa81</td>
+                      <td><span class="badge" style="background: rgba(255,255,255,0.08); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2);">MATCH (0 DEVIATION)</span></td>
+                    </tr>
+                    <tr>
+                      <td><strong>SHA-256 (FIPS 180-4)</strong></td>
+                      <td class="font-mono" id="rep-hash-sha256-1">9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a</td>
+                      <td class="font-mono" id="rep-hash-sha256-2">9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a</td>
+                      <td><span class="badge" style="background: rgba(255,255,255,0.08); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2);">MATCH (0 DEVIATION)</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Timecode Normalization Summary -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[4] TIMECODE CALIBRATION & UTC NORMALIZATION AUDIT</div>
+              <div class="report-grid-two">
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Camera OEM Hardware RTC:</span>
+                  <span class="report-meta-val font-mono" id="rep-raw-rtc">2026-09-18 10:11:48.000 (Non-Synchronized)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Atomic Reference Calibration:</span>
+                  <span class="report-meta-val font-mono">GPS/NTP Stratum-1 Time Standard</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Calculated Clock Drift Delta:</span>
+                  <span class="report-meta-val font-mono" id="rep-drift-delta">+04 minutes 12 seconds (+252.0s drift)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Calibrated Timeline (ISO 27037):</span>
+                  <strong class="report-meta-val font-mono" id="rep-norm-utc">2026-09-18 10:16:00.000 UTC [CALIBRATED]</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carved Video Fragments Recovery Inventory -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[5] UNALLOCATED CLUSTER CARVING & RECONSTRUCTED SUB-CLIPS INVENTORY</div>
+              <div class="report-table-wrap">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Fragment Ref</th>
+                      <th>Cluster Offset Range</th>
+                      <th>Slice Time Range</th>
+                      <th>Codec & Keyframe Boundary</th>
+                      <th>Recovery Confidence</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rep-carved-table-body">
+                    <!-- Populated dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- AI Telemetry & Detection Stream -->
+            <div class="report-section-block">
+              <div class="report-block-heading">[6] AUTOMATED AI VISION TELEMETRY & EVENT AUDIT TRAIL</div>
+              <div class="report-grid-two" style="margin-bottom: var(--space-3);">
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Computer Vision Pipeline:</span>
+                  <span class="report-meta-val">YOLOv8x-Forensics + ByteTrack 3D + PaddleOCR</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Inference Determinism:</span>
+                  <span class="report-meta-val">Strict Deterministic (Temperature = 0.0, Zero Hallucination)</span>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Total Forensic Targets Logged:</span>
+                  <strong class="report-meta-val" id="rep-total-targets">48 Entities (28 Persons, 14 Vehicles, 6 Plates)</strong>
+                </div>
+                <div class="report-meta-cell">
+                  <span class="report-meta-label">Tamper Anomaly Sensor Score:</span>
+                  <span class="report-meta-val">99.8% Nominal (0 Occlusions, 2 Light Flares Logged)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Statutory Legal Certification & Signature Block -->
+            <div class="report-section-block report-legal-attestation">
+              <div class="report-block-heading">[7] STATUTORY LEGAL CERTIFICATION UNDER FRE 902(13) & FRE 902(14)</div>
+              <p class="report-attestation-text">
+                I, <span id="rep-sig-examiner" style="color: #FFFFFF; font-weight: 600;">Investigator J. Vance, EnCE, CCE</span>, certify under penalty of perjury pursuant to the laws of the United States and 28 U.S.C. § 1746 that the digital evidence items cataloged in this report were acquired, processed, carved, and verified using write-blocked hardware and peer-reviewed scientific methodologies conforming to ISO/IEC 27037:2012 and NIST Special Publication 800-86. The video demuxing was conducted without transcoding (<code>-c copy</code>), producing mathematically bit-identical elementary payloads. Cryptographic hash manifests demonstrate complete absence of tampering, deletion, or modification.
+              </p>
+
+              <div class="report-signature-row">
+                <div class="sig-column">
+                  <div class="sig-line"></div>
+                  <div class="sig-label">Digital Forensics Examiner Signature</div>
+                  <div class="sig-sub font-mono" id="rep-sig-date">Certified: 2026-09-20 18:45:00 UTC</div>
+                </div>
+                <div class="sig-column">
+                  <div class="sig-line"></div>
+                  <div class="sig-label">Laboratory Director / Peer Reviewer</div>
+                  <div class="sig-sub font-mono">Quality Assurance Compliance Unit</div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ class ForensicRouter {
       'demo',
       'ai-analysis',
       'ai-chatbot',
+      'reports',
       'docs',
       'contact',
       'login',

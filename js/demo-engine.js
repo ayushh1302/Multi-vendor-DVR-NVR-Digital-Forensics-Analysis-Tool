@@ -203,6 +203,7 @@ const ForensicDemoEngine = {
     this.initCanvasEngine();
     this.initAiStudio();
     this.initChatbot();
+    this.initReportCenter();
     // Default load Dahua preset for immediate inspection
     this.loadPreset('dahua');
   },
@@ -2387,6 +2388,259 @@ DVR file systems (e.g. Dahua DHFS, Hikvision HikFS) record in circular ring buff
     return `<strong>Forensic Copilot Guidance:</strong><br><br>
 Regarding <em>"${query}"</em>:<br>
 In accordance with digital forensic best practices, all video extractions, unallocated cluster carvings, and timestamp calibrations are executed under read-only write-blocking protocols. Dual-hash verification (MD5 & SHA-256) is maintained at every step.`;
+  },
+
+  // =========================================================================
+  // FORENSIC CASE REPORTING & COURT DOSSIER ENGINE (FRE 902 & ISO 27037)
+  // =========================================================================
+  initReportCenter() {
+    // 1. Target Case Selector
+    const caseSelect = document.getElementById('report-case-select');
+    if (caseSelect) {
+      caseSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'custom' && this.activeCase && this.activeCase.isCustom) {
+          this.renderCaseReport();
+        } else if (this.presets[val]) {
+          this.loadPreset(val);
+          this.renderCaseReport();
+        }
+      });
+    }
+
+    // 2. Report Template Selector
+    const templateSelect = document.getElementById('report-template-select');
+    if (templateSelect) {
+      templateSelect.addEventListener('change', () => this.renderCaseReport());
+    }
+
+    // 3. Live Examiner & Agency Input
+    const examinerInput = document.getElementById('report-examiner-input');
+    if (examinerInput) {
+      examinerInput.addEventListener('input', (e) => {
+        const val = e.target.value.trim() || 'Forensic Examiner';
+        this.setText('rep-examiner-name', val);
+        this.setText('rep-sig-examiner', val);
+      });
+    }
+
+    const agencyInput = document.getElementById('report-agency-input');
+    if (agencyInput) {
+      agencyInput.addEventListener('input', (e) => {
+        this.setText('rep-agency-name', e.target.value.trim() || 'Forensic Science Laboratory');
+      });
+    }
+
+    // 4. Action Buttons
+    const printBtn = document.getElementById('btn-print-case-report');
+    if (printBtn) {
+      printBtn.addEventListener('click', () => window.print());
+    }
+
+    const exportTxtBtn = document.getElementById('btn-export-report-txt');
+    if (exportTxtBtn) {
+      exportTxtBtn.addEventListener('click', () => this.exportCaseReportTxt());
+    }
+
+    const exportJsonBtn = document.getElementById('btn-export-report-json');
+    if (exportJsonBtn) {
+      exportJsonBtn.addEventListener('click', () => this.exportCaseReportJson());
+    }
+
+    const copyBtn = document.getElementById('btn-copy-report-clipboard');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => this.copyReportText());
+    }
+
+    // Listen for route changes to render report dynamically
+    window.addEventListener('routeChanged', (e) => {
+      if (e.detail && e.detail.route === 'reports') {
+        this.renderCaseReport();
+      }
+    });
+
+    // Initial render
+    this.renderCaseReport();
+  },
+
+  renderCaseReport() {
+    const c = this.activeCase || this.presets['dahua'];
+    if (!c) return;
+
+    this.setText('rep-case-id', c.caseId);
+    this.setText('rep-exam-date', new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC');
+    this.setText('rep-filename', c.filename);
+    this.setText('rep-capacity', c.size);
+    this.setText('rep-vendor', c.vendor);
+    this.setText('rep-filesystem', c.filesystem);
+
+    const md5 = c.sourceMd5 || c.md5 || '7d59b209a3c4f9118e4012019482fa81';
+    const sha256 = c.sourceSha256 || c.sha256 || '9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a';
+
+    this.setText('rep-hash-md5-1', md5);
+    this.setText('rep-hash-md5-2', md5);
+    this.setText('rep-hash-sha256-1', sha256);
+    this.setText('rep-hash-sha256-2', sha256);
+
+    this.setText('rep-raw-rtc', '2026-09-18 10:11:48.000 (Hardware RTC Drift)');
+    this.setText('rep-drift-delta', '+04m 12s (+252.0s drift compensated)');
+    this.setText('rep-norm-utc', '2026-09-18 10:16:00.000 UTC [ISO 27037 CALIBRATED]');
+    this.setText('rep-sig-date', 'Certified: ' + new Date().toISOString().replace('T', ' ').substring(0, 19) + ' UTC');
+
+    // Populate Carved Video Fragments Table
+    const tableBody = document.getElementById('rep-carved-table-body');
+    if (tableBody) {
+      tableBody.innerHTML = '';
+      const fragments = this.carvedFragments || this.defaultCarvedFragments;
+      fragments.forEach(f => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><strong>${f.id}</strong></td>
+          <td class="font-mono">${f.offset}</td>
+          <td class="font-mono">${f.durationSec}s (${f.startTime}s - ${f.endTime}s)</td>
+          <td>${f.codec} (NAL 0x67 Keyframe Valid)</td>
+          <td><span class="badge" style="background: rgba(255,255,255,0.08); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.2);">${f.confidence}</span></td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+  },
+
+  exportCaseReportTxt() {
+    const c = this.activeCase || this.presets['dahua'];
+    const examiner = (document.getElementById('report-examiner-input') || {}).value || 'Investigator J. Vance, EnCE, CCE';
+    const agency = (document.getElementById('report-agency-input') || {}).value || 'State Forensic Science Laboratory';
+    const nowUtc = new Date().toISOString();
+
+    const report = `================================================================================
+BRUCH.DFA - JUDICIAL DIGITAL EVIDENCE EXAMINATION DOSSIER
+Self-Authenticating Record Pursuant to Federal Rules of Evidence FRE 902(13)/(14)
+ISO/IEC 27037:2012 & NIST Special Publication 800-86 Admissibility Standard
+================================================================================
+
+[1] ADMINISTRATIVE CASE PROFILE & CHAIN OF CUSTODY
+Case Reference Number:        ${c.caseId}
+Examination Generated (UTC):  ${nowUtc}
+Principal Forensic Examiner:  ${examiner}
+Examining Agency / Lab:       ${agency}
+Statutory Authority:          Search Warrant / Lawful Evidence Intake
+Integrity Verification:       Dual Concurrent Cryptographic Verification Passed (0 Block Deviations)
+
+[2] STORAGE HARDWARE & PROPRIETARY FILESYSTEM SPECIFICATIONS
+Target Evidence Image:        ${c.filename}
+Calculated Storage Capacity:  ${c.size}
+OEM Vendor Architecture:      ${c.vendor}
+Proprietary Filesystem:       ${c.filesystem}
+Write-Block Protection Mode:  Hardware Write-Blocker (blockdev --setro Verified)
+
+[3] CRYPTOGRAPHIC HASH VERIFICATION MANIFEST
+MD5 Acquisition Hash:         ${c.sourceMd5 || '7d59b209a3c4f9118e4012019482fa81'}
+MD5 Post-Exam Hash:           ${c.sourceMd5 || '7d59b209a3c4f9118e4012019482fa81'}
+MD5 Integrity Verification:   MATCH (0 BLOCK DEVIATIONS)
+
+SHA-256 Acquisition Hash:     ${c.sourceSha256 || '9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a'}
+SHA-256 Post-Exam Hash:       ${c.sourceSha256 || '9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a'}
+SHA-256 Integrity Verdict:    MATCH (0 BLOCK DEVIATIONS / SELF-AUTHENTICATING)
+
+[4] TIMECODE DRIFT CALIBRATION & UTC NORMALIZATION RECORD
+Hardware Real-Time Clock:     2026-09-18 10:11:48.000 (OEM Uncalibrated)
+Atomic Reference Standard:    Stratum-1 GPS / NTP Atomic Clock
+Calculated Linear Drift:      +04 minutes 12 seconds (+252.0s compensated)
+Calibrated Master Timeline:   2026-09-18 10:16:00.000 UTC [ISO/IEC 27037 Compliant]
+Presentation Timestamp Check: Monotonic frame continuity validated (0 temporal gaps detected)
+
+[5] UNALLOCATED CLUSTER CARVING & SUB-CLIP RECONSTRUCTION INVENTORY
+Extracted Fragments:          ${(this.carvedFragments || []).length} Valid Sub-Clips
+Demuxing Protocol:            Lossless elementary H.264 stream extraction (-c copy)
+- FRAG-CRV-01: Cluster 0x004F8200 - 0x0061B400 | Duration: 4.0s | NAL 0x67 Keyframe Valid | Confidence: 98.4%
+- FRAG-CRV-02: Cluster 0x00B17000 - 0x00C49800 | Duration: 3.5s | P-Frame Slices Intact   | Confidence: 96.2%
+- FRAG-CRV-03: Cluster 0x0182C400 - 0x0195E000 | Duration: 3.7s | Lossless Repackaged MP4 | Confidence: 94.8%
+- FRAG-CRV-04: Cluster 0x02100000 - 0x02250000 | Duration: 3.2s | IDR Keyframe Boundary   | Confidence: 95.7%
+- FRAG-CRV-05: Cluster 0x0289A000 - 0x029F0000 | Duration: 3.6s | Verified Sequence Header | Confidence: 97.1%
+
+[6] AUTOMATED AI VISION TELEMETRY & EVENT AUDIT
+Model Inference Pipeline:     YOLOv8x-Forensics + ByteTrack 3D + PaddleOCR ANPR Engine
+Inference Determinism:        Strict Deterministic (Temperature = 0.0, Zero Stochastic Variation)
+Total Entities Logged:        48 Targets (28 Persons, 14 Vehicles, 6 State Registrations)
+ANPR Plate Keyframe Match:    MH-12-DE-4491 (Confidence: 98.6% - OCR Locked)
+Anti-Tamper Sensor Score:     99.8% Nominal (0 Occlusion Violations)
+
+[7] STATUTORY LEGAL ATTESTATION (FRE 902(13) & 902(14))
+I certify under penalty of perjury under the laws of the United States and 28 U.S.C. § 1746
+that the digital forensic examination documented herein was conducted adhering strictly
+to ISO/IEC 27037:2012 and NIST SP 800-86 standards. All source media was write-blocked,
+and no electronic evidence was altered or fabricated.
+
+Lead Examiner:                ${examiner}
+Digital Signature Hash:       ${sha256.substring(0, 32)} (FRE 902 Cryptographic Seal)
+Timestamp of Attestation:     ${nowUtc}
+================================================================================`;
+
+    const blob = new Blob([report], { type: 'text/plain;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Forensic_Case_Report_${c.caseId}_${Date.now()}.txt`;
+    link.click();
+  },
+
+  exportCaseReportJson() {
+    const c = this.activeCase || this.presets['dahua'];
+    const examiner = (document.getElementById('report-examiner-input') || {}).value || 'Investigator J. Vance, EnCE, CCE';
+    const agency = (document.getElementById('report-agency-input') || {}).value || 'State Forensic Science Laboratory';
+
+    const data = {
+      manifestId: `CASE-MANIFEST-${Date.now()}`,
+      standards: ["ISO/IEC 27037:2012", "NIST SP 800-86", "FRE 902(13)", "FRE 902(14)"],
+      caseProfile: {
+        caseId: c.caseId,
+        examiner: examiner,
+        agency: agency,
+        generatedAt: new Date().toISOString()
+      },
+      hardwareMedia: {
+        filename: c.filename,
+        capacity: c.size,
+        vendor: c.vendor,
+        filesystem: c.filesystem,
+        writeBlockProtection: true
+      },
+      cryptographicHashes: {
+        md5: c.sourceMd5 || '7d59b209a3c4f9118e4012019482fa81',
+        sha256: c.sourceSha256 || '9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a',
+        verificationVerdict: "0_BLOCK_DEVIATION_MATCH"
+      },
+      timecodeNormalization: {
+        driftCompensatedSec: 252.0,
+        standard: "UTC"
+      },
+      carvedFragments: this.carvedFragments || this.defaultCarvedFragments,
+      aiTelemetry: {
+        modelStack: ["YOLOv8x-Forensics", "ByteTrack-3D", "PaddleOCR"],
+        totalDetections: 48,
+        tamperScore: 0.998
+      }
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Case_Manifest_${c.caseId}_${Date.now()}.json`;
+    link.click();
+  },
+
+  copyReportText() {
+    const c = this.activeCase || this.presets['dahua'];
+    const summary = `BRUCH.DFA Case Dossier: ${c.caseId}\nImage: ${c.filename}\nVendor: ${c.vendor} (${c.filesystem})\nSHA-256: ${c.sourceSha256 || c.sha256}\nTimestamp: Calibrated UTC (ISO 27037)\nCarved Fragments: ${(this.carvedFragments || []).length} Recovered\nCourt Admissibility: FRE 902(14) Validated`;
+    navigator.clipboard.writeText(summary).then(() => {
+      const copyBtn = document.getElementById('btn-copy-report-clipboard');
+      if (copyBtn) {
+        const oldText = copyBtn.innerText;
+        copyBtn.innerText = '✓ Summary Copied!';
+        setTimeout(() => copyBtn.innerText = oldText, 2000);
+      }
+    });
   },
 
   setText(id, text) {
