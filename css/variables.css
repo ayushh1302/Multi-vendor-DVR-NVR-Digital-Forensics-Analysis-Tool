@@ -1,0 +1,168 @@
+/* ==========================================================================
+   BRUCH.DFA - DESIGN TOKENS & SYSTEM VARIABLES
+   Support for both Dark Theme (Default) and Crisp Lab Light Theme.
+   Fluid Azure-Style Layouts, Inter Typography, Zero Clunky Boxes.
+   ========================================================================== */
+
+:root, [data-theme="dark"] {
+  /* Core Dark Ground Palette (Seamless Obsidian & Graphite) */
+  --bg-primary: #070A0F;          /* Seamless deep canvas */
+  --bg-secondary: #0B0F17;        /* Secondary canvas */
+  --bg-surface: #101622;          /* Subtle hover surfaces */
+  --bg-surface-elevated: #161E2E; /* Elevated modals */
+  --bg-subtle: #0D121B;           /* Input fields & soft tracks */
+
+  /* Hairline Dividers */
+  --border-muted: rgba(255, 255, 255, 0.06);   /* Softest section divider */
+  --border-subtle: rgba(255, 255, 255, 0.12);  /* Clean hairline rule */
+  --border-strong: rgba(255, 255, 255, 0.28);  /* Active focus state */
+
+  /* Typography Hierarchy */
+  --text-primary: #FFFFFF;        /* Crisp pure white */
+  --text-secondary: #E2E8F0;      /* Soft light grey */
+  --text-muted: #94A3B8;          /* Neutral slate grey */
+  --text-dim: #64748B;            /* Muted timestamps and captions */
+
+  /* Accents & Buttons */
+  --accent-primary: #FFFFFF;
+  --accent-hover: #E2E8F0;
+  --accent-soft: #CBD5E1;
+  --accent-surface: rgba(255, 255, 255, 0.05);
+
+  --btn-primary-bg: #FFFFFF;
+  --btn-primary-text: #070A0F;
+  --btn-primary-hover: #E2E8F0;
+
+  --btn-secondary-bg: rgba(255, 255, 255, 0.05);
+  --btn-secondary-text: #FFFFFF;
+  --btn-secondary-border: rgba(255, 255, 255, 0.14);
+
+  /* Status Colors */
+  --status-verified: #34D399;     /* Soft sage */
+  --status-warning: #FBBF24;      /* Soft amber */
+  --status-flagged: #F87171;      /* Soft coral */
+  --status-info: #CBD5E1;
+
+  /* Structural Chrome */
+  --header-bg: rgba(7, 10, 15, 0.85);
+  --modal-bg: #0A0E17;
+  --cookie-bg: rgba(7, 10, 15, 0.94);
+  --code-bg: #04060A;
+  --code-header-bg: rgba(255, 255, 255, 0.02);
+  --code-text: #E2E8F0;
+  --timeline-track: rgba(255, 255, 255, 0.03);
+  --timeline-segment-bg: #475569;
+  --card-hover-bg: rgba(255, 255, 255, 0.02);
+  --input-bg: rgba(255, 255, 255, 0.03);
+
+  /* Theme Switcher Meta */
+  --theme-icon-stroke: #FFFFFF;
+
+  /* Ambient Surveillance Backdrop Tokens (Clearly Visible CCTV Camera with Soft Dimming) */
+  --bg-cctv-opacity: 0.92;
+  --bg-cctv-filter: grayscale(40%) contrast(110%) brightness(0.90);
+  --bg-cctv-dim: rgba(7, 10, 15, 0.72);
+
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', "SF Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.84rem;    /* 13.5px */
+  --text-base: 0.95rem;  /* 15px */
+  --text-md: 1.0625rem;  /* 17px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.6rem;     /* 25.6px */
+  --text-2xl: 2.25rem;   /* 36px */
+  --text-3xl: 3.25rem;   /* 52px */
+
+  /* Spacing System */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5.5rem;
+
+  /* Layout Boundaries */
+  --container-max: 1240px;
+  --header-height: 68px;
+  --radius-none: 0px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Motion & Easing */
+  --ease-azure: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-slide: 0.7s;
+}
+
+/* ==========================================================================
+   LIGHT THEME (Crisp, High-Contrast Laboratory Aesthetic)
+   ========================================================================== */
+[data-theme="light"] {
+  /* Core Light Ground Palette */
+  --bg-primary: #F8FAFC;          /* Clean lab white */
+  --bg-secondary: #F1F5F9;        /* Soft slate canvas */
+  --bg-surface: #FFFFFF;          /* Pure white card surface */
+  --bg-surface-elevated: #FFFFFF; /* Modals */
+  --bg-subtle: #E2E8F0;           /* Inputs & divider tracks */
+
+  /* Hairline Dividers */
+  --border-muted: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.16);
+  --border-strong: rgba(0, 0, 0, 0.35);
+
+  /* Typography Hierarchy */
+  --text-primary: #0F172A;        /* Deep charcoal / black */
+  --text-secondary: #334155;      /* Slate body text */
+  --text-muted: #64748B;          /* Neutral descriptions */
+  --text-dim: #94A3B8;            /* Captions & subtle metadata */
+
+  /* Accents & Buttons */
+  --accent-primary: #0F172A;
+  --accent-hover: #1E293B;
+  --accent-soft: #475569;
+  --accent-surface: rgba(0, 0, 0, 0.04);
+
+  --btn-primary-bg: #0F172A;
+  --btn-primary-text: #FFFFFF;
+  --btn-primary-hover: #1E293B;
+
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-text: #0F172A;
+  --btn-secondary-border: rgba(0, 0, 0, 0.14);
+
+  /* Status Colors */
+  --status-verified: #059669;     /* Deep green */
+  --status-warning: #D97706;      /* Deep amber */
+  --status-flagged: #DC2626;      /* Deep red */
+  --status-info: #0284C7;
+
+  /* Structural Chrome */
+  --header-bg: rgba(248, 250, 252, 0.90);
+  --modal-bg: #FFFFFF;
+  --cookie-bg: rgba(255, 255, 255, 0.96);
+  --code-bg: #0F172A;
+  --code-header-bg: #1E293B;
+  --code-text: #F8FAFC;
+  --timeline-track: rgba(0, 0, 0, 0.06);
+  --timeline-segment-bg: #94A3B8;
+  --card-hover-bg: rgba(0, 0, 0, 0.02);
+  --input-bg: #FFFFFF;
+
+  /* Theme Switcher Meta */
+  --theme-icon-stroke: #0F172A;
+
+  /* Ambient Surveillance Backdrop Tokens (Clearly Visible in Light Theme with Crisp Dimming) */
+  --bg-cctv-opacity: 0.88;
+  --bg-cctv-filter: grayscale(100%) contrast(110%) brightness(1.15);
+  --bg-cctv-dim: rgba(248, 250, 252, 0.82);
+}
+

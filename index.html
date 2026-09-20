@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BRUCH.DFA | Multi-Vendor DVR/NVR Digital Forensics Analysis Suite</title>
+  <meta name="description" content="Standardized forensic acquisition, proprietary file system parsing, stream carving, timeline normalization, and court-admissible evidence reporting for multi-vendor DVR/NVR surveillance equipment.">
+  
+  <!-- Inter & JetBrains Mono Fonts (Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Core Design System (Cache-busted) -->
+  <link rel="stylesheet" href="css/variables.css?v=3">
+  <link rel="stylesheet" href="css/main.css?v=3">
+  <link rel="stylesheet" href="css/components.css?v=3">
+  <!-- Theme Initialization Script (Prevents Flash of Wrong Theme) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('dvr_forensics_theme');
+      if (savedTheme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       SURVEILLANCE CCTV AMBIENT BACKDROP (FIXED, HARDWARE-ACCELERATED, SOFTLY DIMMED)
+       ========================================================================= -->
+  <div class="site-backdrop" aria-hidden="true">
+    <div class="site-backdrop-image" style="background-image: url('assets/cctv-bg.jpg');"></div>
+    <div class="site-backdrop-overlay"></div>
+  </div>
+
+  <!-- =========================================================================
+       GLOBAL HEADER & NAVIGATION (BLURRED BACKDROP, HAIRLINE DIVIDER)
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="#home" class="brand-wrapper" id="brand-link">
+        <div class="brand-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <span class="brand-title">BRUCH.DFA</span>
+        <span class="brand-badge">v2.4.0-LE</span>
+      </a>
+
+      <button class="nav-toggle" id="nav-toggle-btn" aria-label="Toggle navigation menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <nav style="display: flex; align-items: center; gap: var(--space-4);">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home" class="nav-link active" id="nav-home">Home</a></li>
+          <li><a href="#features" class="nav-link" id="nav-features">Features</a></li>
+          <li><a href="#how-it-works" class="nav-link" id="nav-how-it-works">How It Works</a></li>
+          <li><a href="#vendors" class="nav-link" id="nav-vendors">Supported Vendors</a></li>
+          <li><a href="#demo" class="nav-link" id="nav-demo">Demo</a></li>
+          <li><a href="#ai-analysis" class="nav-link" id="nav-ai-analysis">AI Analysis</a></li>
+          <li><a href="#ai-chatbot" class="nav-link" id="nav-chatbot">AI Chatbot</a></li>
+          <li><a href="#docs" class="nav-link" id="nav-docs">Docs</a></li>
+          <li><a href="#contact" class="nav-link" id="nav-contact">Contact</a></li>
+        </ul>
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle theme" title="Toggle Light / Dark Theme">
+          <span class="theme-toggle-icon" id="theme-toggle-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span id="theme-toggle-label">Light</span>
+        </button>
+
+        <div id="header-auth-status">
+          <a href="#login" class="btn btn-outline btn-sm">Sign In</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN SPA VIEWPORT WITH SCROLL SLIDE-UP REVEAL FLOW
+       ========================================================================= -->
+  <main id="app-viewport">
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 1: HOME (LANDING)
+         ----------------------------------------------------------------------- -->
+    <section id="view-home" class="view-section">
+      <div class="page-section hero-section">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <div class="hero-eyebrow reveal">
+              <span class="dot"></span>
+              <span>Enterprise Forensic Lab Architecture</span>
+            </div>
+            <h1 class="hero-headline reveal delay-1">One Tool. Every DVR. Standardized Forensics.</h1>
+            <p class="hero-subheadline reveal delay-2">
+              Forensic-grade acquisition, recovery, and analysis of surveillance evidence across Dahua, Hikvision, CP Plus, Honeywell, TP-Link, Godrej, Uniview, Matrix, and other major OEMs — in a single unified workflow.
+            </p>
+            <div class="hero-actions reveal delay-3">
+              <a href="#contact" class="btn btn-primary" id="hero-btn-demo">Request Demo</a>
+              <a href="#docs" class="btn btn-secondary" id="hero-btn-docs">Read Documentation</a>
+            </div>
+          </div>
+
+          <!-- Fluid Forensic Flow Pipeline (Open Line - Zero Square Boxes) -->
+          <div class="hero-pipeline-flow reveal delay-2" aria-label="Forensic extraction pipeline diagram">
+            <div class="flow-step-item">
+              <div class="flow-dot"></div>
+              <div class="flow-content">
+                <span class="flow-step-title">PHYSICAL DRIVE SOURCE</span>
+                <span class="flow-step-meta">Hardware Write-Blocker SATA / SAS Connection</span>
+              </div>
+            </div>
+
+            <div class="flow-step-item">
+              <div class="flow-dot"></div>
+              <div class="flow-content">
+                <span class="flow-step-title">BIT-FOR-BIT IMAGING</span>
+                <span class="flow-step-meta">Concurrent MD5 (RFC 1321) & SHA-256 (FIPS 180-4)</span>
+              </div>
+            </div>
+
+            <div class="flow-step-item">
+              <div class="flow-dot"></div>
+              <div class="flow-content">
+                <span class="flow-step-title">STREAM DE-MUXING & EXTRACTION</span>
+                <span class="flow-step-meta">Proprietary Inodes Repackaged Losslessly to MP4 (-c copy)</span>
+              </div>
+            </div>
+
+            <div class="flow-step-item">
+              <div class="flow-dot"></div>
+              <div class="flow-content">
+                <span class="flow-step-title">UNALLOCATED CLUSTER CARVING</span>
+                <span class="flow-step-meta">Keyframe Boundary Alignment (Zero Corrupt Artifacts)</span>
+              </div>
+            </div>
+
+            <div class="flow-step-item">
+              <div class="flow-dot"></div>
+              <div class="flow-content">
+                <span class="flow-step-title" style="color: #FFFFFF;">COURT-ADMISSIBLE MANIFEST</span>
+                <span class="flow-step-meta">Tamper-Proof Audit Log & ISO/IEC 27037:2012 Evidentiary Output</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OEM Partner Strip - Hairline Clean Alignment -->
+      <section class="oem-strip-section" aria-label="Supported DVR Manufacturers">
+        <div class="container">
+          <div class="oem-strip-label reveal">Standardized Multi-Vendor Hardware Coverage</div>
+          <div class="oem-strip-list reveal delay-1">
+            <span class="oem-item">Dahua</span>
+            <span class="oem-item">Hikvision</span>
+            <span class="oem-item">CP Plus</span>
+            <span class="oem-item">Honeywell</span>
+            <span class="oem-item">TP-Link</span>
+            <span class="oem-item">Godrej</span>
+            <span class="oem-item">Uniview</span>
+            <span class="oem-item">Matrix</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why BRUCH.DFA (Open Editorial 4-Column Layout - NO SQUARE BOXES) -->
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Operational Imperatives</span>
+            <h2 class="section-title">Why BRUCH.DFA</h2>
+            <p class="section-desc">
+              Surveillance evidence presents non-standard disk structures, proprietary binary layouts, and strict legal chain-of-custody mandates. BRUCH.DFA unifies multi-vendor analysis into a single verified system.
+            </p>
+          </div>
+
+          <div class="editorial-grid">
+            <div class="editorial-column reveal delay-1">
+              <span class="editorial-num">01</span>
+              <h3 class="editorial-title">Eliminate Vendor Lock-In</h3>
+              <p class="editorial-desc">
+                Replace 8+ proprietary vendor utilities with one standardized platform. Eliminate reliance on obsolete OEM playback tools and discontinued codecs.
+              </p>
+            </div>
+
+            <div class="editorial-column reveal delay-2">
+              <span class="editorial-num">02</span>
+              <h3 class="editorial-title">Court-Admissible Evidence</h3>
+              <p class="editorial-desc">
+                Bit-level cryptographic integrity via concurrent MD5 and SHA-256 verification. Automated immutable chain-of-custody logging built for judicial defense.
+              </p>
+            </div>
+
+            <div class="editorial-column reveal delay-3">
+              <span class="editorial-num">03</span>
+              <h3 class="editorial-title">Recover Deleted Footage</h3>
+              <p class="editorial-desc">
+                Deep cluster carving from unallocated and slack sectors. Reconstruct purged or damaged recordings that vendor software overlooks, aligned to keyframe boundaries.
+              </p>
+            </div>
+
+            <div class="editorial-column reveal delay-4">
+              <span class="editorial-num">04</span>
+              <h3 class="editorial-title">Cut Analysis Time</h3>
+              <p class="editorial-desc">
+                Automated stream de-multiplexing, multi-camera UTC timeline synchronization, and offline YOLO object classification allow investigators to pinpoint incidents instantly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 2: FEATURES (7 INTERACTIVE ACCORDION DISCLOSURES - NO BOXES)
+         ----------------------------------------------------------------------- -->
+    <section id="view-features" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Core Forensic Capabilities</span>
+            <h1 class="section-title">System Features & Modules</h1>
+            <p class="section-desc">
+              Every phase of the digital forensic lifecycle is engineered to satisfy law-enforcement standards, ISO criteria, and judicial evidentiary review. Click any module to expand details.
+            </p>
+          </div>
+
+          <!-- Modern Fluid Accordion Disclosure List -->
+          <div class="features-disclosure-list">
+
+            <!-- Module 1 -->
+            <div class="feature-disclosure-row is-open reveal delay-1" id="module-1">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 01</span>
+                  <span class="feature-module-title">Device Identification</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Autonomous identification of physical DVR/NVR hardware, firmware builds, and partition structures directly from raw bitstream images or physical drive interfaces.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Automatically identifies DVR/NVR vendor, model, and firmware from raw disk images (.dd, .img, .E01, .raw) or attached media.</li>
+                  <li class="feature-bullet-item">Signature-based matching against a built-in database covering Dahua, Hikvision, CP Plus, Honeywell, TP-Link, Godrej, Uniview, and Matrix.</li>
+                  <li class="feature-bullet-item">Detects file system architecture (ext2/ext3/ext4, FAT32, HikFS, DHFS, and proprietary circular-tape layouts).</li>
+                  <li class="feature-bullet-item">Extracts embedded serial numbers, MAC addresses, and channel counts directly from raw superblock structures.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="feature-disclosure-row reveal delay-2" id="module-2">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 02</span>
+                  <span class="feature-module-title">Forensic Acquisition</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Hardware write-blocked bit-for-bit acquisition of connected surveillance drives with real-time cryptographic verification and damaged sector tolerance.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Bit-for-bit forensic imaging utilizing dd/dcfldd pipelines with write-blocking protection.</li>
+                  <li class="feature-bullet-item">Concurrent MD5 and SHA-256 hashing during acquisition with byte-level verification of source vs. image.</li>
+                  <li class="feature-bullet-item">Handles damaged or failing hard drives via specialized ddrescue-style recovery with retry logs and cluster maps.</li>
+                  <li class="feature-bullet-item">Every acquisition phase and temperature threshold logged to an immutable chain-of-custody audit trail.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="feature-disclosure-row reveal delay-3" id="module-3">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 03</span>
+                  <span class="feature-module-title">File System Parsing & Proprietary Format Decoding</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Parsing proprietary video containers and converting non-standard structures into standard ISO MP4 without re-encoding (lossless -c copy).
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Parses standard and proprietary DVR file systems (ext2/3/4, FAT32, vendor-specific circular rings).</li>
+                  <li class="feature-bullet-item">Extracts video files from proprietary containers: Dahua .dav, Hikvision .mp4/.hik, Honeywell .arf, and non-indexed binary streams.</li>
+                  <li class="feature-bullet-item">Decodes proprietary headers and repackages video streams into standard MP4 for playback using ffmpeg without re-encoding (lossless -c copy).</li>
+                  <li class="feature-bullet-item">De-interleaves and reassembles fragmented multi-channel video recorded across shared cylinder tracks.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="feature-disclosure-row reveal delay-4" id="module-4">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 04</span>
+                  <span class="feature-module-title">Deleted Footage Recovery</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Low-level file carving from unallocated clusters, cylinder slack, and orphan allocation tables to reconstruct purged or overwritten recordings.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">File carving from unallocated and slack space using vendor-specific header and packet signature matching.</li>
+                  <li class="feature-bullet-item">Recovers deleted recordings even from proprietary circular file systems where commercial tools fail.</li>
+                  <li class="feature-bullet-item">Aligns carved data boundaries strictly to H.264/H.265 keyframe (IDR) boundaries for maximum playback integrity.</li>
+                  <li class="feature-bullet-item">Flags and stamps each carved artifact with empirical Recovery Confidence ratings.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 5 -->
+            <div class="feature-disclosure-row reveal delay-5" id="module-5">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 05</span>
+                  <span class="feature-module-title">Timeline & Metadata Analysis</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Multi-camera temporal synchronization that normalizes timezone offsets, daylight savings variations, and flags recording discontinuities.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Extracts per-file and per-frame metadata: recording start/end, camera channel, codec, resolution, and frame rate.</li>
+                  <li class="feature-bullet-item">Normalizes all timestamps to UTC using the DVR's internal RTC timezone and DST rules.</li>
+                  <li class="feature-bullet-item">Builds a synchronized cross-camera timeline that highlights recording gaps (evidence tampering or power loss).</li>
+                  <li class="feature-bullet-item">Exports timelines to CSV, JSON, and self-contained interactive visual HTML reports.</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 6 -->
+            <div class="feature-disclosure-row reveal delay-6" id="module-6">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 06</span>
+                  <span class="feature-module-title">Integrity, Hashing & Chain of Custody</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Cryptographic integrity verification ensuring mathematically verifiable provenance across every extracted file and recovered artifact.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Generates independent MD5 and SHA-256 hashes for the master disk image, every extracted video file, and every carved cluster.</li>
+                  <li class="feature-bullet-item">Produces an automated Hash Manifest (CSV) covering the entire evidence repository.</li>
+                  <li class="feature-bullet-item">Automated chain-of-custody logging: who, what, when for every action performed on the evidence.</li>
+                  <li class="feature-bullet-item">All audit records and reports exportable for court submission under FRE 902(13)/(14).</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Module 7 -->
+            <div class="feature-disclosure-row reveal delay-6" id="module-7">
+              <div class="feature-row-summary">
+                <div class="feature-row-left">
+                  <span class="feature-module-num">MODULE 07</span>
+                  <span class="feature-module-title">AI-Based Analytics</span>
+                </div>
+                <span class="feature-module-toggle-icon">+</span>
+              </div>
+              <div class="feature-row-content">
+                <p class="feature-row-desc">
+                  Air-gapped machine intelligence scanning high-volume video archives to index persons, vehicles, faces, and anomalous motion events.
+                </p>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item">Face detection and object classification (person, vehicle, animal) using air-gapped pre-trained YOLO models.</li>
+                  <li class="feature-bullet-item">Motion detection via adaptive background subtraction and temporal frame differencing with tunable thresholds.</li>
+                  <li class="feature-bullet-item">Scans multi-channel footage, flagging significant events with microsecond timestamps and confidence scores.</li>
+                  <li class="feature-bullet-item">Outputs annotated keyframe JPEGs and structured detections CSV so analysts jump directly to critical moments.</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 3: HOW IT WORKS (OPEN CONTINUOUS WORKFLOW - NO BOXES)
+         ----------------------------------------------------------------------- -->
+    <section id="view-how-it-works" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Operational Methodology</span>
+            <h1 class="section-title">Standardized 6-Step Forensic Pipeline</h1>
+            <p class="section-desc">
+              From raw physical drive acquisition to court-ready presentation, each phase follows strict digital forensic principles and verifiable science.
+            </p>
+          </div>
+
+          <!-- Open Continuous Timeline (Zero Box Frames) -->
+          <div class="workflow-pipeline-wrapper">
+            <div class="workflow-pipeline">
+              <div class="workflow-node-item reveal delay-1">
+                <span class="workflow-node-num">01 / ACQUIRE</span>
+                <h3 class="workflow-node-title">Bitstream Image</h3>
+                <p class="workflow-node-desc">
+                  Physical disk image via hardware write-blocker with concurrent dual MD5 & SHA-256 verification.
+                </p>
+              </div>
+
+              <div class="workflow-node-item reveal delay-2">
+                <span class="workflow-node-num">02 / IDENTIFY</span>
+                <h3 class="workflow-node-title">Signature Match</h3>
+                <p class="workflow-node-desc">
+                  Autonomous identification of OEM vendor, model, firmware, and circular cylinder layouts.
+                </p>
+              </div>
+
+              <div class="workflow-node-item reveal delay-3">
+                <span class="workflow-node-num">03 / PARSE</span>
+                <h3 class="workflow-node-title">Stream Repackage</h3>
+                <p class="workflow-node-desc">
+                  Proprietary video containers (.dav, .hik, .arf) demuxed to standard MP4 losslessly (-c copy).
+                </p>
+              </div>
+
+              <div class="workflow-node-item reveal delay-4">
+                <span class="workflow-node-num">04 / RECOVER</span>
+                <h3 class="workflow-node-title">Cluster Carving</h3>
+                <p class="workflow-node-desc">
+                  Deep unallocated sweep reconstructing purged footage aligned to keyframe (IDR) boundaries.
+                </p>
+              </div>
+
+              <div class="workflow-node-item reveal delay-5">
+                <span class="workflow-node-num">05 / ANALYZE</span>
+                <h3 class="workflow-node-title">Timeline & AI</h3>
+                <p class="workflow-node-desc">
+                  UTC normalization across channels, tamper gap detection, and YOLO object tagging.
+                </p>
+              </div>
+
+              <div class="workflow-node-item reveal delay-6">
+                <span class="workflow-node-num">06 / REPORT</span>
+                <h3 class="workflow-node-title">Court Manifest</h3>
+                <p class="workflow-node-desc">
+                  Comprehensive court-ready PDF and CSV export featuring dual-hash manifests and chain of custody.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admissibility Statement (Open Hairline - No Box) -->
+          <div class="admissibility-block reveal">
+            <h3 class="admissibility-title">Evidentiary Integrity & Court Admissibility</h3>
+            <p class="admissibility-text">
+              Every digital artifact produced by BRUCH.DFA complies with the requirements of <strong>Federal Rules of Evidence 902(13) and 902(14)</strong> for self-authenticating digital records and satisfies <strong>ISO/IEC 27037:2012</strong> standards. Raw storage remains untouched. All conversions are bit-accurate and lossless (<code>-c copy</code>), ensuring that analysis is legally sound and fully reproducible by opposing experts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 4: SUPPORTED VENDORS (MODERN FLUID ROWS - NO TABLES)
+         ----------------------------------------------------------------------- -->
+    <section id="view-vendors" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Compatibility & Coverage</span>
+            <h1 class="section-title">Supported DVR/NVR Manufacturers</h1>
+            <p class="section-desc">
+              Comprehensive signature catalog covering global surveillance equipment, proprietary cylinder geometries, and custom file containers.
+            </p>
+          </div>
+
+          <!-- Fluid Modern Vendor Rows (Zero Table Grid Cells) -->
+          <div class="vendors-fluid-list reveal delay-1">
+            <div class="vendor-fluid-row" style="color: var(--text-muted); font-size: var(--text-xs); font-family: var(--font-mono); text-transform: uppercase;">
+              <span>OEM VENDOR</span>
+              <span>FILE SYSTEM ARCHITECTURE</span>
+              <span>NATIVE CONTAINER</span>
+              <span>DECODING METHOD</span>
+              <span style="text-align: right;">STATUS</span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Dahua</span>
+              <span class="vendor-meta-cell">ext3 / ext4 / DHFS Circular</span>
+              <span class="vendor-meta-cell">.dav (MPEG-PS / H.264 / H.265)</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Hikvision</span>
+              <span class="vendor-meta-cell">HikFS v1/v2 (Custom ext4 inodes)</span>
+              <span class="vendor-meta-cell">.mp4 / .hik (Custom Headers)</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">CP Plus</span>
+              <span class="vendor-meta-cell">ext3 / ext4 / DHFS Variant</span>
+              <span class="vendor-meta-cell">.dav / .cps</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Honeywell</span>
+              <span class="vendor-meta-cell">Proprietary Partition Ring</span>
+              <span class="vendor-meta-cell">.arf / .h264 Raw Elementary</span>
+              <span class="vendor-meta-cell">De-multiplex to MP4</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">TP-Link</span>
+              <span class="vendor-meta-cell">ext4 / FAT32 (Tapo/VIGI layouts)</span>
+              <span class="vendor-meta-cell">.mp4 / Proprietary Index</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Godrej</span>
+              <span class="vendor-meta-cell">ext4 / Proprietary Block Layout</span>
+              <span class="vendor-meta-cell">Proprietary Stream Container</span>
+              <span class="vendor-meta-cell">Stream Extraction to MP4</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Uniview (UNV)</span>
+              <span class="vendor-meta-cell">ext4 / UBFS Partition Map</span>
+              <span class="vendor-meta-cell">.unv / .mp4 Custom</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+
+            <div class="vendor-fluid-row">
+              <span class="vendor-name-cell">Matrix</span>
+              <span class="vendor-meta-cell">ext4 / Proprietary Sector Rings</span>
+              <span class="vendor-meta-cell">.sec / .mp4 Custom</span>
+              <span class="vendor-meta-cell">Lossless to MP4 (-c copy)</span>
+              <span class="vendor-status-cell"><span class="badge badge-verified">Supported</span></span>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--space-6); font-size: var(--text-xs); color: var(--text-dim); font-family: var(--font-mono);">
+            * Additional vendors and legacy surveillance firmware are supported via configurable signature definition files (.yaml / .sig).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 5: DEMO (OPEN FLUID FORENSIC CONSOLE - NO BOXES)
+         ----------------------------------------------------------------------- -->
+    <section id="view-demo" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Interactive Laboratory Environment</span>
+            <h1 class="section-title">Forensic Ingest & Analysis Console</h1>
+            <p class="section-desc">
+              Execute real-time forensic processing on simulated or loaded surveillance media. Experience automated OEM identification, stream extraction, unallocated carving, and cryptographic verification.
+            </p>
+          </div>
+
+          <div class="demo-fluid-container reveal delay-1">
+            <!-- Minimal Console Status Bar -->
+            <div class="demo-console-header">
+              <div class="demo-status-pill">
+                <span style="width: 6px; height: 6px; border-radius: 50%; background-color: var(--status-verified);"></span>
+                <span>ENGINE: OPERATIONAL</span>
+                <span style="color: var(--text-dim);">/</span>
+                <span style="color: var(--text-muted);">WRITE-BLOCK: LOCKED</span>
+              </div>
+              <div>
+                <a href="#contact" class="btn btn-outline btn-sm">Request Full Demo</a>
+              </div>
+            </div>
+
+            <!-- Workstation Mode Switcher Tabs -->
+            <div class="demo-nav-tabs">
+              <button type="button" class="demo-tab-btn active" id="tab-btn-analysis" data-tab="tab-content-analysis">
+                <span>🔬 Ingest & Video Analysis Player</span>
+              </button>
+              <button type="button" class="demo-tab-btn" id="tab-btn-imaging" data-tab="tab-content-imaging">
+                <span>⚡ Create Forensic Image (Bitstream Acquisition)</span>
+                <span class="badge badge-warning" style="font-size: 9px; margin-left: 6px;">WRITE-BLOCKED</span>
+              </button>
+            </div>
+
+            <!-- =========================================================================
+                 WORKSTATION TAB 1: INGEST & VIDEO ANALYSIS PLAYER
+                 ========================================================================= -->
+            <div id="tab-content-analysis" class="tab-content-panel">
+
+              <!-- Borderless Upload Zone -->
+              <div class="upload-zone-minimal" id="demo-upload-zone">
+                <input type="file" id="demo-file-input" style="display: none;" accept=".dd,.img,.E01,.raw,.dav,.mp4">
+                <div class="upload-instruction-clean">Drop Forensic Disk Image or Surveillance Video Dump to Ingest</div>
+                <div class="upload-subtext-clean">Supports bitstream images (.dd, .img, .E01, .raw) and proprietary video dumps (.dav, .arf, .mp4)</div>
+                <div class="preset-chip-list">
+                  <span style="font-size: 11px; font-family: var(--font-mono); color: var(--text-dim); margin-right: 4px;">OR LOAD LAB SAMPLE:</span>
+                  <button type="button" class="preset-chip" data-preset="dahua">Dahua DH-XVR5108HS (2TB)</button>
+                  <button type="button" class="preset-chip" data-preset="hikvision">Hikvision DS-7208HQHI (1TB)</button>
+                  <button type="button" class="preset-chip" data-preset="cpplus">CP Plus CP-UVR-0801E1 (2TB)</button>
+                  <button type="button" class="preset-chip" id="chip-switch-imaging" style="border-color: #FBBF24; color: #FBBF24;">⚡ Create Forensic Image (.dd/.E01)</button>
+                </div>
+              </div>
+
+            <!-- Minimal Progress Stream & Log -->
+            <div class="progress-stream">
+              <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: var(--text-xs);">
+                <span id="demo-progress-status" style="color: var(--text-secondary);">Standby — Ready for Image Execution</span>
+                <span style="color: var(--text-dim);">MD5 / SHA-256 CONCURRENT</span>
+              </div>
+              <div class="progress-track-line">
+                <div class="progress-track-fill" id="demo-progress-fill" style="width: 100%;"></div>
+              </div>
+              <div class="console-log-stream" id="demo-console-log">
+                <div>[11:42:01] Forensic acquisition engine initialized. Write-blocker: LOCKED.</div>
+                <div>[11:42:02] Built-in signature catalog: 8 OEM profiles, 42 partition patterns.</div>
+                <div>[11:42:02] Dual cryptographic modules verified: MD5 (RFC 1321) & SHA-256 (FIPS 180-4).</div>
+              </div>
+            </div>
+
+            <!-- Open Metric Counters Strip (No Boxes) -->
+            <div id="demo-results-view">
+              <div class="metrics-strip">
+                <div class="metric-strip-item">
+                  <span class="metric-strip-label">CASE IDENTIFIER</span>
+                  <span class="metric-strip-value" id="metric-case-id">CASE-2026-DH-8491</span>
+                </div>
+                <div class="metric-strip-item">
+                  <span class="metric-strip-label">DETECTED OEM</span>
+                  <span class="metric-strip-value" id="metric-vendor">Dahua Technology</span>
+                </div>
+                <div class="metric-strip-item">
+                  <span class="metric-strip-label">ALLOCATED STREAMS</span>
+                  <span class="metric-strip-value" id="metric-streams">84 files</span>
+                </div>
+                <div class="metric-strip-item">
+                  <span class="metric-strip-label">CARVED FOOTAGE</span>
+                  <span class="metric-strip-value" id="metric-carved">12 files</span>
+                </div>
+                <div class="metric-strip-item">
+                  <span class="metric-strip-label">TAMPER GAPS</span>
+                  <span class="metric-strip-value" id="metric-gaps" style="color: var(--status-flagged);">2 detected</span>
+                </div>
+              </div>
+
+              <!-- Cryptographic Fingerprint Bar -->
+              <div style="padding: var(--space-4) 0; border-bottom: 1px solid var(--border-muted); font-family: var(--font-mono); font-size: var(--text-xs);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 3px;">
+                  <span style="color: var(--text-muted);">SOURCE IMAGE MD5: <strong id="metric-md5" style="color: #FFFFFF;">7f4c26a9e851d42398b1a7c5031b2890</strong></span>
+                  <span class="badge badge-verified">VERIFIED MATCH</span>
+                </div>
+                <div>
+                  <span style="color: var(--text-muted);">SOURCE IMAGE SHA-256: <strong id="metric-sha256" style="color: #FFFFFF;">9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a</strong></span>
+                </div>
+              </div>
+
+              <!-- Open Timeline Visualizer -->
+              <div class="timeline-open-track">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-2);">
+                  <span style="font-family: var(--font-mono); font-size: var(--text-xs); font-weight: 600; color: var(--text-primary);">
+                    CROSS-CAMERA SYNCHRONIZED TIMELINE (UTC NORMALIZED)
+                  </span>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">
+                    <span style="color: #94A3B8;">■ Allocated</span> &nbsp;|&nbsp; 
+                    <span style="color: #CBD5E1;">■ Carved Recovered</span> &nbsp;|&nbsp; 
+                    <span style="color: #F87171;">■ Tamper Gap</span>
+                  </span>
+                </div>
+                <div id="timeline-tracks">
+                  <!-- Channels rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- Video Player Simulation & Export Actions -->
+              <div class="grid-2" style="margin-bottom: var(--space-4);">
+                <div>
+                  <!-- High Visibility Normalized Timestamp OSD Banner -->
+                  <div class="normalized-timestamp-banner" id="player-normalized-banner">
+                    <div class="ntb-item">
+                      <span class="ntb-tag">RAW OEM PTS:</span>
+                      <span class="ntb-val font-mono" id="player-raw-pts">2026-09-19 14:50:48.000 (Drift: +04m 12s)</span>
+                    </div>
+                    <div class="ntb-item ntb-normalized">
+                      <span class="ntb-tag">NORMALIZED UTC:</span>
+                      <span class="ntb-val font-mono" id="player-osd-time-norm">2026-09-19 14:55:00.000 UTC</span>
+                      <span class="badge badge-verified" style="font-size: 9px; padding: 1px 6px;">NTP LOCKED</span>
+                    </div>
+                  </div>
+
+                  <div class="player-simulation-clean" id="player-container">
+                    <canvas id="player-live-canvas" width="640" height="360" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1;"></canvas>
+                    <video id="player-real-video" playsinline controls loop muted autoplay style="display: none; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 2; background: #000;"></video>
+                    
+                    <div class="player-osd" style="position: relative; z-index: 10;">
+                      <span id="player-osd-cam">CAM 01 [GATE] | 1920x1080 | 25 FPS | H.264</span>
+                      <span id="player-osd-time">2026-09-19 14:55:00.000 UTC</span>
+                    </div>
+
+                    <div class="bounding-box-ai" id="player-ai-tag" style="position: absolute; z-index: 10; pointer-events: none; top: 25%; left: 35%; width: 140px; height: 110px;">
+                      AI DETECTED: Person (96%)
+                    </div>
+
+                    <div class="player-osd" style="align-items: flex-end; position: relative; z-index: 10;">
+                      <span id="player-osd-hash" style="font-size: 10px; color: var(--text-muted);">SHA-256: 617b3a721c569f41b2...</span>
+                      <span class="badge badge-verified" id="player-osd-badge" style="font-size: 10px;">LIVE ANALYSIS ACTIVE</span>
+                    </div>
+                  </div>
+
+                  <!-- Forensic Timecode Normalization Telemetry Strip -->
+                  <div class="timestamp-normalization-strip" id="player-time-normalization-strip">
+                    <div class="tns-col">
+                      <div class="tns-label">Camera RTC Drift Offset</div>
+                      <div class="tns-val" id="tns-drift-val">+04m 12.000s (Compensated)</div>
+                    </div>
+                    <div class="tns-col">
+                      <div class="tns-label">Normalization Standard</div>
+                      <div class="tns-val" style="color: #6EE7B7;">ISO/IEC 27037:2012 §6.3 (GPS Atomic Ref)</div>
+                    </div>
+                    <div class="tns-col">
+                      <div class="tns-label">Cross-Channel Sync Jitter</div>
+                      <div class="tns-val" style="color: #93C5FD;">&lt; 0.8ms (Frame-Locked)</div>
+                    </div>
+                  </div>
+
+                  <!-- Forensic Video Playback Bar & Camera Selector -->
+                  <div class="player-controls-bar">
+                    <div style="display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap;">
+                      <button type="button" class="ctrl-btn active" id="btn-play-pause">⏸ PAUSE</button>
+                      <button type="button" class="ctrl-btn" id="btn-step-prev" title="Step -1 Frame (40ms)">⏮ -1 FRAME</button>
+                      <button type="button" class="ctrl-btn" id="btn-step-next" title="Step +1 Frame (40ms)">⏭ +1 FRAME</button>
+                      <div class="ctrl-divider"></div>
+                      <span class="ctrl-label">SPEED:</span>
+                      <button type="button" class="ctrl-chip active" data-speed="1">1x</button>
+                      <button type="button" class="ctrl-chip" data-speed="2">2x</button>
+                      <button type="button" class="ctrl-chip" data-speed="4">4x</button>
+                      <div class="ctrl-divider"></div>
+                      <button type="button" class="ctrl-btn active" id="btn-toggle-ai">AI BOXES: ON</button>
+                    </div>
+
+                    <div style="display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap;">
+                      <span class="ctrl-label">CAMERA:</span>
+                      <button type="button" class="cam-btn active" data-channel="1">CH 01 GATE</button>
+                      <button type="button" class="cam-btn" data-channel="2">CH 02 LOBBY</button>
+                      <button type="button" class="cam-btn" data-channel="3">CH 03 PARKING</button>
+                      <button type="button" class="cam-btn" data-channel="4">CH 04 DOCK</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                  <div>
+                    <h4 style="font-size: var(--text-md); margin-bottom: var(--space-2);">Evidentiary Export Operations</h4>
+                    <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4);">
+                      Export mathematically authenticated manifests and chain-of-custody documentation generated directly from this analysis session.
+                    </p>
+                    <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.8;">
+                      <div>Detected File System: <strong id="metric-filesystem" style="color: var(--text-primary);">Dahua DHFS (ext3 base)</strong></div>
+                      <div>Lossless Repackaging: <strong>Enabled (-c copy)</strong></div>
+                      <div>Keyframe Boundary Check: <strong>PASSED (IDR Aligned)</strong></div>
+                      <div>Timezone Reference: <strong>UTC +00:00 Normalized</strong></div>
+                      <div>Active Stream Status: <strong id="player-active-meta" style="color: var(--status-verified);">STREAM DE-MUXED (25 FPS)</strong></div>
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-6);">
+                    <button class="btn btn-primary btn-sm" id="btn-export-csv">Download Hash Manifest (CSV)</button>
+                    <button class="btn btn-secondary btn-sm" id="btn-export-report">Export Court Report</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modern Fluid Evidence Streams Feed (NO TABLE BOXES) -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3);">
+                <h3 style="font-size: var(--text-md); font-weight: 600;">Extracted Video Streams & Carved Evidence</h3>
+                <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">Click any row to load into player</span>
+              </div>
+
+              <div class="evidence-stream-list">
+                <div class="evidence-fluid-item" style="color: var(--text-dim); font-size: var(--text-xs); font-family: var(--font-mono); text-transform: uppercase; cursor: default;">
+                  <span>ARTIFACT ID</span>
+                  <span>CHANNEL</span>
+                  <span>UTC START TIME</span>
+                  <span>DURATION</span>
+                  <span>FORMAT / RES</span>
+                  <span>STATUS</span>
+                  <span>SHA-256 FINGERPRINT</span>
+                  <span style="text-align: right;">ACTION</span>
+                </div>
+                <div id="extracted-files-body">
+                  <!-- Rendered dynamically by demo-engine.js -->
+                </div>
+              </div>
+
+              <!-- Deep Carve Binary Stream Inspector & Video Extraction Suite -->
+              <div class="carve-inspector-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); flex-wrap: wrap; gap: var(--space-3);">
+                  <div>
+                    <span class="section-label" style="margin-bottom: 2px;">Unallocated Cluster Carving & Data Recovery</span>
+                    <h4 style="font-size: var(--text-md); font-weight: 600;">Deep Binary Cluster Carving & Video Extraction</h4>
+                  </div>
+                  <div style="display: flex; gap: var(--space-2); align-items: center;">
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-extract-all-carved">⚡ Extract All Sub-Clips</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="btn-run-deep-carve">▶ Run Deep Carve</button>
+                  </div>
+                </div>
+
+                <!-- Hex Stream Live Terminal -->
+                <div class="hex-stream-terminal" id="hex-stream-box">
+                  <div class="hex-row">[STANDBY] Click "Run Deep Carve" to sweep unallocated clusters for orphaned H.264/H.265 IDR slice headers...</div>
+                </div>
+
+                <!-- Carved Video Fragment Extraction & Recovery Gallery -->
+                <div class="carved-gallery-section">
+                  <div class="carved-gallery-header">
+                    <div>
+                      <h4 style="font-size: var(--text-sm); font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: var(--space-2);">
+                        <span>Recovered Video Sub-Clips</span>
+                        <span class="badge badge-warning" id="carved-count-badge" style="font-size: 10px;">3 CLIPS EXTRACTED</span>
+                      </h4>
+                      <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: 2px;">
+                        Carved fragments extracted from the uploaded video bitstream. Click any clip below to play the recovered video fragment.
+                      </p>
+                    </div>
+                    <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);" id="carved-source-label">
+                      SOURCE: Lab Surveillance Disk (Dahua Raw)
+                    </span>
+                  </div>
+
+                  <!-- Dynamic Cards Grid -->
+                  <div class="carved-cards-grid" id="carved-cards-grid">
+                    <!-- Populated dynamically by ForensicDemoEngine.renderCarvedGallery() -->
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <!-- End of tab-content-analysis -->
+
+            <!-- =========================================================================
+                 WORKSTATION TAB 2: CREATE FORENSIC IMAGE (BITSTREAM ACQUISITION)
+                 ========================================================================= -->
+            <div id="tab-content-imaging" class="tab-content-panel" style="display: none;">
+              <div class="imaging-station-panel">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--space-4);">
+                  <div>
+                    <span class="section-label" style="margin-bottom: 2px;">ISO/IEC 27037:2012 & NIST SP 800-86 Compliant</span>
+                    <h3 style="font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">
+                      Create Forensic Disk Image (Write-Blocked Acquisition)
+                    </h3>
+                    <p style="font-size: var(--text-xs); color: var(--text-muted); max-width: 680px; line-height: 1.5;">
+                      Acquire an exact, forensically sound physical bitstream image (.dd / .raw / .E01) directly from attached surveillance hard drives, SD cards, or flash memory. Concurrently hashes source and destination blocks with zero write mutations.
+                    </p>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: var(--space-2);">
+                    <span class="badge badge-verified" style="font-size: 11px;">HARDWARE WRITE-BLOCK: ACTIVE (LOCKED)</span>
+                  </div>
+                </div>
+
+                <!-- Acquisition Configuration Grid -->
+                <div class="imaging-grid">
+                  <!-- Source Device -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label" for="imaging-source-device">Source Storage Device (Physical / Blockdev)</label>
+                    <select class="imaging-select" id="imaging-source-device">
+                      <option value="dahua_wd_2tb">/dev/sdb — Western Digital Purple 2.0 TB [Dahua OEM, SN: WCC4M019283]</option>
+                      <option value="hik_seagate_1tb">/dev/sdc — Seagate SkyHawk Surveillance 1.0 TB [Hikvision OEM, SN: Z1D839LK]</option>
+                      <option value="cpplus_toshiba_2tb">/dev/sdd — Toshiba DT01ACA 2.0 TB [CP Plus OEM, SN: 82K0129F]</option>
+                      <option value="custom_uploaded">Attached Custom Uploaded Media / Disk Dump</option>
+                    </select>
+                  </div>
+
+                  <!-- Output Image Format -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label">Forensic Image Target Format</label>
+                    <div class="imaging-format-chips" id="imaging-format-chips">
+                      <button type="button" class="imaging-chip-btn active" data-format="dd">RAW / DD (.dd)</button>
+                      <button type="button" class="imaging-chip-btn" data-format="e01">Expert Witness (.E01)</button>
+                      <button type="button" class="imaging-chip-btn" data-format="raw">Generic Raw (.raw)</button>
+                      <button type="button" class="imaging-chip-btn" data-format="aff4">AFF4 Container</button>
+                    </div>
+                  </div>
+
+                  <!-- Case Identifier -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label" for="imaging-case-ref">Case Reference ID</label>
+                    <input type="text" class="imaging-input" id="imaging-case-ref" value="CASE-2026-DH-8491">
+                  </div>
+
+                  <!-- Evidence / Item ID -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label" for="imaging-evidence-tag">Evidence Item Tag</label>
+                    <input type="text" class="imaging-input" id="imaging-evidence-tag" value="ITEM-01-HDD-SDB">
+                  </div>
+
+                  <!-- Examiner Credentials -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label" for="imaging-examiner-name">Lead Forensic Examiner</label>
+                    <input type="text" class="imaging-input" id="imaging-examiner-name" value="Det. R. Vance (Badge #4092) - Digital Forensics Unit">
+                  </div>
+
+                  <!-- Block Geometry & Hashing -->
+                  <div class="imaging-field-group">
+                    <label class="imaging-label">Block Geometry & Cryptographic Protocol</label>
+                    <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); line-height: 1.6; padding-top: 6px;">
+                      <span>Sector Size: <strong>512 Bytes</strong> | Block Buffer: <strong>64 KB</strong></span><br>
+                      <span>Hashing: <strong style="color: var(--status-verified);">Dual-Hash Concurrent (MD5 RFC 1321 + SHA-256 FIPS 180-4)</strong></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Launch Action Button -->
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-muted); padding-top: var(--space-4); flex-wrap: wrap; gap: var(--space-3);">
+                  <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);">
+                    Target Destination: <span id="imaging-target-dest" style="color: var(--text-primary);">/evidence/CASE-2026-DH-8491_Acquisition.dd</span>
+                  </div>
+                  <button type="button" class="btn btn-primary" id="btn-start-imaging" style="padding: 8px 24px; font-weight: 600;">
+                    ⚡ Start Bitstream Acquisition (Create Forensic Image)
+                  </button>
+                </div>
+
+                <!-- Live Imaging Progress Container (Hidden initially until started) -->
+                <div id="imaging-progress-container" style="display: none;">
+                  <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: var(--text-xs); margin-bottom: var(--space-2);">
+                    <span id="imaging-progress-status" style="color: #FBBF24;">Acquiring Physical Sectors...</span>
+                    <span id="imaging-progress-pct" style="color: var(--text-primary); font-weight: 600;">0%</span>
+                  </div>
+                  <div class="progress-track-line" style="height: 4px;">
+                    <div class="progress-track-fill" id="imaging-progress-fill" style="width: 0%; background: #FBBF24;"></div>
+                  </div>
+
+                  <!-- Real-time Stats Grid -->
+                  <div class="imaging-stats-row">
+                    <div class="imaging-stat-card">
+                      <span class="imaging-stat-label">Sectors Acquired</span>
+                      <span class="imaging-stat-val" id="imaging-stat-sectors">0 / 3,907,029,168</span>
+                    </div>
+                    <div class="imaging-stat-card">
+                      <span class="imaging-stat-label">Transfer Speed</span>
+                      <span class="imaging-stat-val" id="imaging-stat-speed">215.4 MB/s</span>
+                    </div>
+                    <div class="imaging-stat-card">
+                      <span class="imaging-stat-label">Elapsed Time</span>
+                      <span class="imaging-stat-val" id="imaging-stat-time">00:00:00</span>
+                    </div>
+                    <div class="imaging-stat-card">
+                      <span class="imaging-stat-label">Bad Blocks / I/O Errors</span>
+                      <span class="imaging-stat-val" id="imaging-stat-errors" style="color: var(--status-verified);">0 (Clean)</span>
+                    </div>
+                  </div>
+
+                  <!-- Live Stream Terminal Log -->
+                  <div class="hex-stream-terminal" id="imaging-log-terminal" style="height: 120px; margin-top: var(--space-3);">
+                    <!-- Streamed dynamically -->
+                  </div>
+                </div>
+
+                <!-- Acquisition Complete & Verification Card -->
+                <div id="imaging-success-result" class="imaging-result-box" style="display: none;">
+                  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--space-2);">
+                    <div style="display: flex; align-items: center; gap: var(--space-2);">
+                      <span class="badge badge-verified">IMAGE ACQUIRED & CRYPTOGRAPHICALLY VERIFIED</span>
+                      <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);" id="imaging-result-filename">CASE-2026-DH-8491_Acquisition.dd (1,863.02 GiB)</span>
+                    </div>
+                    <span style="font-family: var(--font-mono); font-size: 10px; color: #34D399;">MATCH: 0 BIT DEVIATIONS</span>
+                  </div>
+
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary); line-height: 1.8; background: rgba(0,0,0,0.4); padding: var(--space-3); border-radius: var(--radius-sm); border: 1px solid var(--border-muted);">
+                    <div>Physical Source MD5: <strong id="imaging-hash-md5" style="color: #FFFFFF;">7f4c26a9e851d42398b1a7c5031b2890</strong> [MATCH]</div>
+                    <div>Destination SHA-256: <strong id="imaging-hash-sha256" style="color: #FFFFFF;">9b3c4155a0134f77c8e9b62f14aa4858b9911e3b6a90823df1f0d3674bf54c2a</strong> [MATCH]</div>
+                    <div>FRE 902(14) Custody: Self-authenticating bitstream digital record authenticated by concurrent hash calculation.</div>
+                  </div>
+
+                  <!-- Action Buttons -->
+                  <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-2);">
+                    <button type="button" class="btn btn-primary btn-sm" id="btn-download-created-image" style="flex: 1;">
+                      ⬇ Download Created Forensic Image (.dd)
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" id="btn-download-imaging-cert" style="flex: 1;">
+                      Export Acquisition Certificate (.txt)
+                    </button>
+                    <button type="button" class="btn btn-warning btn-sm" id="btn-mount-in-analysis" style="flex: 1; background: rgba(251, 191, 36, 0.15); border-color: #FBBF24; color: #FBBF24;">
+                      🔬 Mount Directly in Analysis Player
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 5.5: AI-BASED FORENSIC VIDEO INTELLIGENCE MODULE
+         ----------------------------------------------------------------------- -->
+    <section id="view-ai-analysis" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Machine Learning & Computer Vision Forensics</span>
+            <h1 class="section-title">AI-Powered Forensic Video Intelligence Studio</h1>
+            <p class="section-desc">
+              Deterministic, non-hallucinatory computer vision models for automated object detection, multi-camera re-identification (Re-ID), optical character recognition (LPR/ANPR), velocity telemetry, and temporal tamper anomaly scoring under FRE 902(14).
+            </p>
+          </div>
+
+          <!-- AI Model & Integrity Ribbon (Grey and White) -->
+          <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: var(--space-4) var(--space-6); margin-bottom: var(--space-6); backdrop-filter: blur(12px);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4); font-family: var(--font-mono); font-size: var(--text-xs);">
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">NEURAL INFERENCE BACKEND</span>
+                <strong style="color: #FFFFFF;">YOLOv8x-Forensics + ByteTrack + PaddleOCR</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">ENTITIES DETECTED</span>
+                <strong id="ai-stat-objects" style="color: #FFFFFF;">48 Targets (28 Persons, 14 Vehicles, 6 Plates)</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">INFERENCE CONFIDENCE</span>
+                <strong id="ai-stat-confidence" style="color: #FFFFFF;">96.8% Mean (Deterministic Weights)</strong>
+              </div>
+              <div>
+                <span style="color: #94A3B8; display: block; font-size: 10px;">TAMPER ANOMALY SCORE</span>
+                <strong id="ai-stat-tamper" style="color: #CBD5E1;">99.8% Nominal (0 Occlusions)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main AI Studio Layout (Fluid, No Rigid Square Boxes) -->
+          <div class="ai-studio-grid">
+            <!-- Left: Live AI Inference Viewport -->
+            <div class="ai-player-panel" style="border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3);">
+                <div style="display: flex; align-items: center; gap: var(--space-2);">
+                  <span class="badge" id="ai-status-indicator" style="background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2);">● LIVE AI TRACKING ACTIVE</span>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: #94A3B8;" id="ai-fps-counter">60.0 FPS • TENSOR-RT ENGINE</span>
+                </div>
+                <div style="display: flex; gap: var(--space-2);">
+                  <button type="button" class="btn btn-outline btn-sm" id="btn-ai-pause" style="padding: 2px 10px; font-size: 11px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">⏸ Pause</button>
+                  <button type="button" class="btn btn-outline btn-sm" id="btn-ai-export-snapshot" style="padding: 2px 10px; font-size: 11px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">📷 Save AI Frame</button>
+                </div>
+              </div>
+
+              <!-- High Visibility Normalized Timestamp OSD Banner for AI Feed -->
+              <div class="normalized-timestamp-banner" style="border-color: rgba(255, 255, 255, 0.15);">
+                <div class="ntb-item">
+                  <span class="ntb-tag" style="color: #94A3B8;">RAW OEM CLOCK:</span>
+                  <span class="ntb-val font-mono" id="ai-raw-pts" style="color: #CBD5E1;">2026-09-19 14:50:48.000 (Drift: +04m 12s)</span>
+                </div>
+                <div class="ntb-item ntb-normalized">
+                  <span class="ntb-tag" style="color: #94A3B8;">NORMALIZED UTC:</span>
+                  <span class="ntb-val font-mono" id="ai-norm-utc" style="color: #FFFFFF; font-weight: 700;">2026-09-19 14:55:00.000 UTC</span>
+                  <span class="badge" style="font-size: 9px; padding: 1px 6px; background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.2);">NTP ATOMIC</span>
+                </div>
+              </div>
+
+              <!-- Viewport Canvas & Real Video -->
+              <div class="ai-viewport-box" style="border: 1px solid rgba(255, 255, 255, 0.1);">
+                <canvas id="ai-studio-canvas" class="ai-viewport-canvas" width="640" height="360"></canvas>
+                <video id="ai-studio-video" class="ai-viewport-video" playsinline controls loop muted autoplay style="display: none;"></video>
+              </div>
+
+              <!-- AI Visual Toggles Toolbar (Grey and White) -->
+              <div class="ai-toggles-bar">
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-boxes">
+                  <span>✓</span> Target Markers
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-labels">
+                  <span>✓</span> Confidence %
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-vectors">
+                  <span>✓</span> Velocity Vectors
+                </button>
+                <button type="button" class="ai-chip-toggle active" id="toggle-ai-plates">
+                  <span>✓</span> License Plate OCR
+                </button>
+                <button type="button" class="ai-chip-toggle" id="toggle-ai-heatmap">
+                  <span>○</span> Motion Heatmap
+                </button>
+                <button type="button" class="ai-chip-toggle" id="toggle-ai-blur">
+                  <span>○</span> Privacy Face Blur
+                </button>
+              </div>
+            </div>
+
+            <!-- Right: AI Intelligence Controls & Live Chronological Event Stream -->
+            <div class="ai-controls-panel" style="border: 1px solid rgba(255, 255, 255, 0.08); background: rgba(255, 255, 255, 0.02);">
+              <div class="ai-panel-title">
+                <span style="color: #FFFFFF;">AI Target Classification & Telemetry</span>
+                <span class="badge badge-outline" style="font-size: 10px; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">BYTE-TRACK 3D</span>
+              </div>
+
+              <!-- Model Selector -->
+              <div>
+                <label style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase; margin-bottom: 4px; display: block;">Active Model Architecture</label>
+                <select class="imaging-select" id="ai-model-select" style="padding: 6px 10px; font-size: 11px; background: rgba(0,0,0,0.4); color: #FFFFFF; border-color: rgba(255,255,255,0.15);">
+                  <option value="yolo8_forensics">YOLOv8x-Forensics (Weights Hash: e3b0c442...)</option>
+                  <option value="anpr_lpr">PaddleOCR + LPRNet (Automated Number Plate Recognition)</option>
+                  <option value="biometric_arcface">ArcFace Biometric Re-Identification (ISO/IEC 19794)</option>
+                  <option value="tamper_optical">Dense Optical Flow (Anti-Tamper Occlusion Sensor)</option>
+                </select>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: #94A3B8; text-transform: uppercase;">Real-Time Entity Feed</span>
+                  <span style="font-family: var(--font-mono); font-size: 10px; color: #E2E8F0;" id="ai-filter-count">Showing 48 Events</span>
+                </div>
+                <div class="ai-filter-tabs" id="ai-filter-tabs">
+                  <button type="button" class="ai-filter-tab active" data-filter="all">All (48)</button>
+                  <button type="button" class="ai-filter-tab" data-filter="person">Persons (28)</button>
+                  <button type="button" class="ai-filter-tab" data-filter="vehicle">Vehicles (14)</button>
+                  <button type="button" class="ai-filter-tab" data-filter="plate">Plates (6)</button>
+                  <button type="button" class="ai-filter-tab" data-filter="tamper">Tamper (2)</button>
+                </div>
+              </div>
+
+              <!-- Chronological AI Event Stream -->
+              <div class="ai-event-feed" id="ai-event-feed">
+                <!-- Dynamically populated -->
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="display: flex; flex-direction: column; gap: var(--space-2); margin-top: auto; padding-top: var(--space-2); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                <button type="button" class="btn btn-primary btn-sm" id="btn-export-ai-report" style="width: 100%;">
+                  ⬇ Export Certified AI Forensic Report (.txt / FRE 902)
+                </button>
+                <button type="button" class="btn btn-outline btn-sm" id="btn-export-ai-json" style="width: 100%; color: #E2E8F0; border-color: rgba(255,255,255,0.2);">
+                  Export Structured Telemetry (.json)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- =====================================================================
+               INTEGRATED FORENSIC AI CHATBOT COPILOT STUDIO (EMBEDDED IN MODULE)
+               ===================================================================== -->
+          <div class="embedded-chatbot-studio" id="ai-chatbot-section" style="margin-top: var(--space-8); padding-top: var(--space-6); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-4); flex-wrap: wrap; gap: var(--space-2);">
+              <div>
+                <span class="section-label" style="color: #94A3B8;">Live Generative AI Forensics</span>
+                <h2 style="font-size: var(--text-xl); font-weight: 700; color: #FFFFFF; margin-bottom: 4px;">
+                  💬 BRUCH.DFA Forensic Copilot (Powered by Google Gemini)
+                </h2>
+                <p style="font-size: var(--text-xs); color: #94A3B8; max-width: 650px;">
+                  Connected to Google Gemini 3.6-Flash LLM. Providing real-time evidentiary analysis for DVR/NVR filesystems, unallocated cluster carving, presentation timecode calibration, and FRE 902(13)/(14) self-authenticating records.
+                </p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <button type="button" class="btn btn-outline btn-sm" id="embedded-btn-set-key" style="padding: 2px 10px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">🔑 API Key</button>
+                <span class="chatbot-pulse-dot"></span>
+                <span class="badge" style="background: rgba(255, 255, 255, 0.08); color: #FFFFFF; border: 1px solid rgba(255, 255, 255, 0.25); font-size: 10px; padding: 2px 8px;">● LIVE GEMINI LLM ONLINE</span>
+              </div>
+            </div>
+
+            <!-- Embedded Chat Box -->
+            <div class="embedded-chat-box" style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: var(--radius-md); overflow: hidden; backdrop-filter: blur(16px);">
+              <!-- Quick Prompt Chips -->
+              <div class="embedded-chips-bar" id="embedded-chips-bar" style="padding: 10px 14px; background: rgba(0, 0, 0, 0.35); border-bottom: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 8px; overflow-x: auto; white-space: nowrap;">
+                <button type="button" class="chatbot-chip embedded-chip" data-query="How does timestamp normalization work in court under ISO 27037?">⏱️ Timestamp Normalization</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">⚖️ FRE 902 Admissibility</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="What is carved unallocated slack space in surveillance DVRs?">🧩 Carved Slack Space</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">🔍 Analyze Active Case</button>
+                <button type="button" class="chatbot-chip embedded-chip" data-query="How do I inspect H.264 NAL keyframes (SPS/PPS 0x0000000167)?">🎥 Inspect H.264 NAL Headers</button>
+              </div>
+
+              <!-- Messages History -->
+              <div class="embedded-chat-messages" id="embedded-chat-messages" style="height: 340px; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <div class="chat-bubble chat-bubble-bot">
+                  Greetings Examiner. I am the <strong>BRUCH.DFA Forensic Copilot</strong>, powered live by <strong>Google Gemini 3.6-Flash LLM</strong>.
+                  <br><br>
+                  Your Gemini API key is activated and running. I can conduct in-depth forensic evaluations on DVR/NVR proprietary structures (Dahua DHFS, Hikvision HikFS), unallocated keyframe carving, presentation timestamp (PTS) drift normalization, and chain-of-custody self-authentication under <strong>FRE 902(13)/(14)</strong>.
+                  <br><br>
+                  Click any prompt chip above or ask any digital forensics question below!
+                </div>
+              </div>
+
+              <!-- Chat Input Bar -->
+              <div class="embedded-chat-input-row" style="padding: 12px 14px; background: rgba(0, 0, 0, 0.4); border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; gap: 8px;">
+                <input type="text" class="chatbot-input" id="embedded-chat-input" placeholder="Ask a forensic question or case query..." autocomplete="off" style="flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: var(--radius-sm); padding: 8px 12px; color: #FFFFFF; font-size: var(--text-xs); outline: none;">
+                <button type="button" class="btn btn-primary btn-sm" id="embedded-chat-send-btn" style="padding: 0 18px; font-weight: 600;">Ask Copilot</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 6: DOCUMENTATION (CLEAN FLUID SIDEBAR & SECTIONS)
+         ----------------------------------------------------------------------- -->
+    <section id="view-docs" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Technical Reference & Standards</span>
+            <h1 class="section-title">Forensic Documentation & SOPs</h1>
+            <p class="section-desc">
+              Standard Operating Procedures (SOPs), system installation requirements, hardware write-blocking protocols, and automated API command reference.
+            </p>
+          </div>
+
+          <div class="docs-layout-clean">
+            <!-- Sidebar Navigation -->
+            <aside class="docs-sidebar-clean" aria-label="Documentation Categories">
+              <div>
+                <div class="docs-group-title">Overview</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#docs" class="docs-nav-link active" data-doc-target="doc-getting-started">Getting Started</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-requirements">System Requirements</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="docs-group-title">Standard Operating Procedures</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-01">SOP-01 Acquisition</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-02">SOP-02 Identification</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-03">SOP-03 Parsing & Decoding</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-04">SOP-04 Carving & Recovery</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-05">SOP-05 Timeline Analysis</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-sop-06">SOP-06 Legal Reporting</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <div class="docs-group-title">Reference</div>
+                <ul class="docs-nav-list">
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-validation">Validation & Testing</a></li>
+                  <li><a href="#docs" class="docs-nav-link" data-doc-target="doc-cli-api">CLI & API Reference</a></li>
+                </ul>
+              </div>
+            </aside>
+
+            <!-- Main Documentation Content -->
+            <div class="docs-content-clean">
+
+              <section class="doc-section-clean reveal" id="doc-getting-started">
+                <h2>Getting Started</h2>
+                <p>
+                  BRUCH.DFA is deployed as an enterprise command-line suite and headless processing backend. It integrates with standard Linux forensic distributions (CAINE, SANS SIFT, Kali Linux) and standalone server environments.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>BASH — REPOSITORY CLONE & INSTALL</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">git clone https://github.com/ayushh1302/Multi-vendor-DVR-NVR-Digital-Forensics-Analysis-Tool.git
+cd Multi-vendor-DVR-NVR-Digital-Forensics-Analysis-Tool
+python3 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-requirements">
+                <h3>System Requirements & Dependencies</h3>
+                <ul class="feature-bullets">
+                  <li class="feature-bullet-item"><strong>Host Operating System:</strong> Linux (Ubuntu 22.04 LTS+, Debian 12, RHEL 9, CAINE 13.0).</li>
+                  <li class="feature-bullet-item"><strong>Core Runtime:</strong> Python 3.10 or higher.</li>
+                  <li class="feature-bullet-item"><strong>System Binaries:</strong> <code>ffmpeg</code> (v5.1+ compiled with libx264/libx265), <code>dcfldd</code>, <code>ddrescue</code>, <code>libewf</code>.</li>
+                  <li class="feature-bullet-item"><strong>Hardware Write-Blocker:</strong> Tableau T8u, WiebeTech UltraDock, or kernel-level read-only write-blocker (<code>blockdev --setro</code>).</li>
+                </ul>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-01">
+                <span class="section-label">SOP-01</span>
+                <h2>Standard Operating Procedure: Drive Acquisition</h2>
+                <p>
+                  Acquisition must guarantee bitstream preservation of the target storage medium. Physical DVR drives must never be mounted directly by operating systems to prevent automatic journal replay or partition modification.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>BASH — BIT-FOR-BIT ACQUISITION WITH DUAL HASH</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content"># Verify drive is write-protected
+sudo blockdev --getro /dev/sdb
+
+# Execute bitstream acquisition with concurrent MD5 & SHA256 hashing
+dcfldd if=/dev/sdb of=/evidence/case_01/raw_disk.dd \
+  hash=sha256,md5 \
+  sha256log=/evidence/case_01/sha256.log \
+  md5log=/evidence/case_01/md5.log \
+  status=on bs=64k</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-02">
+                <span class="section-label">SOP-02</span>
+                <h2>Standard Operating Procedure: Device Identification</h2>
+                <p>
+                  Detects hardware architecture, OEM firmware build, partition tables, and circular buffer geometry using header magic bytes and sector metadata tables.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>CLI — AUTOMATED SIGNATURE IDENTIFICATION</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">python3 -m bruch_dfa identify \
+  --image /evidence/case_01/raw_disk.dd \
+  --output-format json \
+  --log /evidence/case_01/identification.json</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-03">
+                <span class="section-label">SOP-03</span>
+                <h2>Standard Operating Procedure: File System Parsing & Lossless Repackaging</h2>
+                <p>
+                  Proprietary video containers (.dav, .arf, .hik) contain standard H.264/H.265 elementary streams wrapped in non-standard transport packets. BRUCH.DFA strips the proprietary wrapper and demuxes to standard MP4 without re-encoding, ensuring bit-accurate preservation.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>CLI — EXTRACT & LOSSLESS REPACKAGE</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">python3 -m bruch_dfa extract \
+  --image /evidence/case_01/raw_disk.dd \
+  --dest /evidence/case_01/extracted_videos/ \
+  --repackage mp4 \
+  --threads 8</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-04">
+                <span class="section-label">SOP-04</span>
+                <h2>Standard Operating Procedure: Unallocated File Carving</h2>
+                <p>
+                  When video tracks are deleted or sectors are orphaned due to circular overwrite, the carver sweeps unallocated space, identifies OEM video headers, and rebuilds valid video files starting and ending at keyframe (IDR) boundaries.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>CLI — DEEP UNALLOCATED CLUSTER CARVE</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">python3 -m bruch_dfa carve \
+  --image /evidence/case_01/raw_disk.dd \
+  --vendor dahua \
+  --dest /evidence/case_01/carved_footage/ \
+  --min-size 1MB \
+  --keyframe-align</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-05">
+                <span class="section-label">SOP-05</span>
+                <h2>Standard Operating Procedure: Timeline & Timestamp Normalization</h2>
+                <p>
+                  Extracts internal real-time clock (RTC) variables, adjusts for local timezone and daylight savings time (DST), and synchronizes all camera streams onto a single chronologically aligned timeline.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>CLI — TIMELINE NORMALIZATION & GAP DETECTION</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">python3 -m bruch_dfa timeline \
+  --evidence-dir /evidence/case_01/ \
+  --timezone "UTC" \
+  --detect-gaps-threshold 15s \
+  --export-csv /evidence/case_01/timeline_manifest.csv</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-sop-06">
+                <span class="section-label">SOP-06</span>
+                <h2>Standard Operating Procedure: Court Admissibility & Hash Manifest</h2>
+                <p>
+                  Generates cryptographic proof of evidentiary integrity across all analyzed artifacts, creating an audit trail adhering to legal chain-of-custody protocols.
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>CLI — REPORT GENERATION</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">python3 -m bruch_dfa report \
+  --case-id "CASE-2026-CR-0081" \
+  --examiner "Investigator J. Vance, EnCE" \
+  --agency "State Forensic Science Laboratory" \
+  --output-pdf /evidence/case_01/final_court_report.pdf</pre>
+                </div>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-validation">
+                <h2>Validation & Testing Reports</h2>
+                <p>
+                  BRUCH.DFA is tested against National Institute of Standards and Technology (NIST) Computer Forensic Tool Testing (CFTT) test methodology. Tests verify that source media remains 100% unchanged, converted files reproduce identical elementary frame sequences, and SHA-256 hashes match across independent verification runs.
+                </p>
+              </section>
+
+              <section class="doc-section-clean reveal" id="doc-cli-api">
+                <h2>API & Scripting Reference</h2>
+                <p>
+                  Integrate BRUCH.DFA directly into your lab's automated ingestion pipeline via our Python SDK:
+                </p>
+
+                <div class="code-block-wrapper">
+                  <div class="code-header">
+                    <span>PYTHON — SCRIPTING INTEGRATION</span>
+                    <button class="copy-btn">Copy</button>
+                  </div>
+                  <pre class="code-content">from bruch_dfa import ForensicImage, OEMSignatureDB
+
+# Load bitstream image with read-only guarantee
+evidence = ForensicImage.open("/evidence/case_01/raw_disk.dd")
+
+# Match hardware profile
+vendor_match = OEMSignatureDB.identify(evidence)
+print(f"Matched OEM: {vendor_match.vendor_name}, FW: {vendor_match.firmware}")
+
+# Carve deleted clusters
+carved_files = evidence.carve_unallocated(keyframe_aligned=True)
+print(f"Successfully carved {len(carved_files)} video fragments.")</pre>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 7: CONTACT (OPEN EDITORIAL FORM - NO ENCLOSED BOXES)
+         ----------------------------------------------------------------------- -->
+    <section id="view-contact" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="section-label">Official Inquiries</span>
+            <h1 class="section-title">Request Evaluation Access</h1>
+            <p class="section-desc">
+              Evaluation licenses and live deployment support are provided to accredited law enforcement agencies, state forensic laboratories, and enterprise incident response units.
+            </p>
+          </div>
+
+          <div class="contact-editorial-grid">
+            <div class="reveal delay-1">
+              <form id="contact-form" novalidate>
+                <div class="form-group">
+                  <label for="contact-name" class="form-label">Investigator / Full Name *</label>
+                  <input type="text" id="contact-name" class="form-input" placeholder="e.g. Det. Marcus Reynolds" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-org" class="form-label">Agency / Laboratory / Enterprise *</label>
+                  <input type="text" id="contact-org" class="form-input" placeholder="e.g. Regional Digital Forensics Unit / Cyber Command" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-email" class="form-label">Official Gov / Corporate Email *</label>
+                  <input type="email" id="contact-email" class="form-input" placeholder="e.g. m.reynolds@lab.gov" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-subject" class="form-label">Inquiry Classification</label>
+                  <select id="contact-subject" class="form-select">
+                    <option value="evaluation">Request Live Evaluation License</option>
+                    <option value="demo">Schedule Technical Demonstration</option>
+                    <option value="custom-oem">Custom OEM Signature Development</option>
+                    <option value="support">Active Case Technical Assistance</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-message" class="form-label">Case Details or Scope Description *</label>
+                  <textarea id="contact-message" class="form-textarea" placeholder="Detail the target DVR hardware, file system, or lab acquisition scope..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="btn-contact-submit">
+                  Submit Official Evaluation Request
+                </button>
+              </form>
+            </div>
+
+            <div class="contact-aside-clean reveal delay-2">
+              <div>
+                <h3 style="font-size: var(--text-lg); margin-bottom: var(--space-4);">Direct Laboratory Communications</h3>
+                <p style="font-size: var(--text-sm); color: var(--text-muted); line-height: 1.7; margin-bottom: var(--space-6);">
+                  For priority case assistance, subpoena support, or air-gapped lab installation packages, contact the forensic engineering desk:
+                </p>
+
+                <div style="font-family: var(--font-mono); font-size: var(--text-xs); line-height: 2.2; margin-bottom: var(--space-8);">
+                  <div>Official Lab Email: <strong style="color: #FFFFFF;">lab@dvrforensics.internal</strong></div>
+                  <div>General Communications: <strong style="color: #FFFFFF;">inquiries@dvrforensics.org</strong></div>
+                  <div>PGP Fingerprint: <span style="color: var(--text-muted);">9B41 2C08 5E11 87AA 4210</span></div>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid var(--border-muted); padding-top: var(--space-6);">
+                <div style="font-family: var(--font-mono); font-size: var(--text-xs); color: #CBD5E1; text-transform: uppercase; margin-bottom: var(--space-1);">
+                  Law Enforcement & Accredited Labs Only
+                </div>
+                <div style="font-size: var(--text-xs); color: var(--text-dim); line-height: 1.6;">
+                  All requests for deployment packages and proprietary signature definitions undergo organizational credential validation prior to software delivery.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 8: EXAMINER LOGIN PORTAL
+         ----------------------------------------------------------------------- -->
+    <section id="view-login" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="auth-wrapper reveal">
+            <div class="auth-header-block">
+              <span class="section-label">Restricted Access</span>
+              <h1 class="auth-title">Examiner Sign In</h1>
+              <p class="auth-subtitle">Authenticated portal for verified digital forensics investigators and crime laboratory examiners.</p>
+            </div>
+
+            <div class="auth-tabs">
+              <a href="#login" class="auth-tab-link active">Sign In</a>
+              <a href="#register" class="auth-tab-link">Register Agency</a>
+            </div>
+
+            <form id="login-form" novalidate>
+              <div class="form-group">
+                <label for="login-id" class="form-label">Badge ID or Official Email *</label>
+                <input type="text" id="login-id" class="form-input" placeholder="e.g. DET-4892 or m.reynolds@lab.gov" required>
+              </div>
+
+              <div class="form-group">
+                <label for="login-pass" class="form-label">Master Password *</label>
+                <input type="password" id="login-pass" class="form-input" placeholder="••••••••••••" required>
+              </div>
+
+              <div class="form-group">
+                <label for="login-token" class="form-label">Hardware Token / FIDO2 OTP (Optional)</label>
+                <input type="text" id="login-token" class="form-input" placeholder="e.g. 6-digit cryptographic security code">
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6); font-size: var(--text-xs);">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-muted);">
+                  <input type="checkbox" checked style="accent-color: #FFFFFF;"> Remember workstation
+                </label>
+                <a href="#contact" style="color: var(--text-muted);">Lost credentials?</a>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: var(--space-4);" id="btn-login-submit">
+                Authenticate & Open Lab Session
+              </button>
+
+              <div style="text-align: center; margin-top: var(--space-4);">
+                <button type="button" class="btn btn-outline btn-sm" style="width: 100%;" id="btn-guest-login">
+                  Enter as Guest Examiner (Instant Sandbox)
+                </button>
+              </div>
+            </form>
+
+            <div class="auth-le-warning">
+              NOTICE: This system is strictly restricted to authorized law enforcement and forensic science personnel. Unauthorized access attempts are monitored and prosecuted under 18 U.S.C. § 1030 and applicable international statutes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 9: AGENCY REGISTRATION
+         ----------------------------------------------------------------------- -->
+    <section id="view-register" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="auth-wrapper reveal">
+            <div class="auth-header-block">
+              <span class="section-label">Credential Provisioning</span>
+              <h1 class="auth-title">Agency Registration</h1>
+              <p class="auth-subtitle">Register a law enforcement agency, sovereign digital forensics unit, or enterprise lab.</p>
+            </div>
+
+            <div class="auth-tabs">
+              <a href="#login" class="auth-tab-link">Sign In</a>
+              <a href="#register" class="auth-tab-link active">Register Agency</a>
+            </div>
+
+            <form id="register-form" novalidate>
+              <div class="form-group">
+                <label for="reg-agency" class="form-label">Law Enforcement Agency / Laboratory *</label>
+                <input type="text" id="reg-agency" class="form-input" placeholder="e.g. State Forensic Science Laboratory" required>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-dept" class="form-label">Department / Unit *</label>
+                <select id="reg-dept" class="form-select">
+                  <option value="digital-forensics">Digital Forensics / Cyber Crime Unit</option>
+                  <option value="incident-response">Enterprise Incident Response (DFIR)</option>
+                  <option value="major-crimes">Major Crimes / Homicide Division</option>
+                  <option value="internal-affairs">Internal Affairs / Anti-Corruption</option>
+                  <option value="state-defense">Homeland Security / Defense Department</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-name" class="form-label">Lead Investigator / Examiner Full Name *</label>
+                <input type="text" id="reg-name" class="form-input" placeholder="e.g. Det. Marcus Reynolds" required>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-email" class="form-label">Official Agency Email (.gov / verified domain) *</label>
+                <input type="email" id="reg-email" class="form-input" placeholder="e.g. m.reynolds@lab.gov" required>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-badge" class="form-label">Investigator Badge / Credential ID *</label>
+                <input type="text" id="reg-badge" class="form-input" placeholder="e.g. BADGE-94021" required>
+              </div>
+
+              <div class="form-group">
+                <label for="reg-pass" class="form-label">Master Account Password *</label>
+                <input type="password" id="reg-pass" class="form-input" placeholder="Minimum 12 characters" required>
+              </div>
+
+              <div style="margin-bottom: var(--space-6); font-size: var(--text-xs); color: var(--text-muted);">
+                By submitting, your agency certifies compliance with ISO/IEC 27037:2012 evidentiary chain-of-custody protocols.
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;" id="btn-register-submit">
+                Register Agency Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 10: PRIVACY POLICY
+         ----------------------------------------------------------------------- -->
+    <section id="view-privacy" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="legal-layout-clean reveal">
+            <div class="legal-article-header">
+              <span class="section-label">Evidentiary Compliance</span>
+              <h1 class="section-title">Forensic Evidentiary Privacy Policy</h1>
+              <p class="section-desc">Effective Date: September 2026 | Compliant with CJIS Security Policy & ISO/IEC 27037:2012</p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>1. Absolute Zero-Telemetry Guarantee</h3>
+              <p>
+                BRUCH.DFA operates entirely locally on the examiner's workstation or air-gapped forensic server. At no point are seized disk images (.dd, .img, .E01), carved video clips, extracted timestamps, or evidentiary metadata transmitted over external networks or stored in public clouds.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>2. Criminal Justice Information Services (CJIS) Adherence</h3>
+              <p>
+                All evidence processing adheres strictly to FBI CJIS Security Policy requirements for handling Criminal Justice Information (CJI). Forensic logs, audit records, and user session identifiers are protected using FIPS 140-3 validated cryptographic standards.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>3. Physical Storage & Inode Data Handling</h3>
+              <p>
+                Physical hard drives attached to the BRUCH.DFA system are mounted solely in write-blocked read-only mode (<code>blockdev --setro</code>). The software does not modify source master drives, disk superblocks, or cylinder allocation maps.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>4. Cryptographic Hashing & Proof of Non-Tampering</h3>
+              <p>
+                Dual MD5 (RFC 1321) and SHA-256 (FIPS 180-4) hashes are generated concurrently upon ingestion. Cryptographic manifests are stored in immutable local audit logs to prove that no alteration occurred between original seizure and court presentation.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>5. Local Session Tokens & Cookie Usage</h3>
+              <p>
+                The platform utilizes essential browser session storage strictly for maintaining examiner authentication tokens and local user preferences. No advertising cookies, third-party analytics scripts, or behavioral tracking mechanisms are deployed.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>6. Evidentiary Inquiries & Data Protection Desk</h3>
+              <p>
+                For subpoena questions, validation certifications, or data protection officer inquiries:
+                <br>
+                <strong style="color: var(--text-primary);">Email: privacy@bruch-dfa.org</strong> | PGP: 9B41 2C08 5E11 87AA 4210
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- -----------------------------------------------------------------------
+         PAGE 11: TERMS & CONDITIONS
+         ----------------------------------------------------------------------- -->
+    <section id="view-terms" class="view-section" style="display: none;">
+      <div class="page-section">
+        <div class="container">
+          <div class="legal-layout-clean reveal">
+            <div class="legal-article-header">
+              <span class="section-label">Legal Agreement</span>
+              <h1 class="section-title">Terms & Conditions of Forensic Operation</h1>
+              <p class="section-desc">Last Revised: September 2026 | Governing Law Enforcement & Enterprise Laboratory Use</p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>1. Authorized Lawful Interception & Search Authority</h3>
+              <p>
+                Use of BRUCH.DFA is conditioned upon the examiner possessing lawful legal authority, including valid search warrants, consent decrees, or court orders permitting digital examination of the target surveillance apparatus.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>2. Self-Authenticating Digital Records (FRE 902)</h3>
+              <p>
+                Artifacts, reports, and manifests produced by this tool are designed to satisfy Federal Rules of Evidence Rule 902(13) and 902(14). The software guarantees that video stream demuxing is lossless (<code>-c copy</code>) and produces bit-identical elementary frame payloads.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>3. Strict Prohibition on Evidence Modification</h3>
+              <p>
+                The software source code and binary tools are designed solely for non-destructive analysis and carving. Attempting to weaponize or alter software routines to fabricate or falsify timestamps or frame sequences constitutes a violation of federal law.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>4. Proprietary Vendor Signature Intellectual Property</h3>
+              <p>
+                Built-in hardware signature definitions for Dahua, Hikvision, CP Plus, Honeywell, TP-Link, Godrej, Uniview, and Matrix were developed through clean-room reverse engineering and binary analysis of unencrypted video packet formats for judicial admissibility.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>5. Warranty Disclaimer & Expert Witness Support</h3>
+              <p>
+                While the software is validated according to NIST CFTT test methodologies, the user acknowledges that physical disk degradation and partial track overwrites may impact recovery rates. Expert witness defense declarations are available upon official agency request.
+              </p>
+            </div>
+
+            <div class="legal-section-block">
+              <h3>6. Export Control & Munitions Classification</h3>
+              <p>
+                BRUCH.DFA is classified as dual-use technical software under EAR99 and is subject to United States and multilateral export administration regulations.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       CONFIRMATION MODAL (SUBMISSION SUCCESS TICKET)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="contact-success-modal" style="display: none;">
+    <div class="modal-content-clean" role="dialog" aria-modal="true">
+      <div style="display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3);">
+        <span class="badge badge-verified">DISPATCHED</span>
+        <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);" id="modal-ticket-id">INTAKE-LE-849102</span>
+      </div>
+      <h3 style="font-size: var(--text-xl); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-3);">
+        Official Request Logged
+      </h3>
+      <p style="font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-5);">
+        Your evaluation request has been entered into the forensic review queue. An encrypted response will be dispatched to your verified organizational address.
+      </p>
+
+      <div style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); padding: var(--space-4); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: var(--text-xs); margin-bottom: var(--space-6);">
+        <div style="margin-bottom: 2px;">Organization: <strong id="modal-ticket-org" style="color: var(--text-primary);">Regional Forensic Lab</strong></div>
+        <div style="margin-bottom: 2px;">Timestamp: <span id="modal-ticket-time" style="color: var(--text-muted);">2026-09-19 06:18:22 UTC</span></div>
+        <div>Integrity Hash: <span style="color: var(--text-dim);">e3b0c44298fc1c149afbf4c8996fb92427ae41e4...</span></div>
+      </div>
+
+      <button type="button" class="btn btn-secondary" style="width: 100%;" id="modal-close-btn">
+        Return to Portal
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       CARVED EVIDENCE RECONSTRUCTION MODAL (SUB-CLIP EXTRACTION VIEWER)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="carved-recovery-modal" style="display: none;">
+    <div class="modal-content-clean modal-content-wide" role="dialog" aria-modal="true">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-3);">
+        <div style="display: flex; align-items: center; gap: var(--space-2);">
+          <span class="badge badge-warning">CARVED & RECONSTRUCTED</span>
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);" id="carved-modal-id">FRAGMENT #EV-0103-CRV</span>
+        </div>
+        <button type="button" id="carved-modal-close-top" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.4rem; line-height: 1; padding: 0 4px;">&times;</button>
+      </div>
+
+      <h3 style="font-size: var(--text-lg); font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-2);">
+        Recovered Video Stream Extract
+      </h3>
+      <p style="font-size: var(--text-xs); color: var(--text-muted); margin-bottom: var(--space-4);">
+        Bitstream carved from unallocated disk clusters. Reconstructed to valid MP4 boundary via lossless NAL unit extraction (<code style="font-size: 11px;">-c copy</code>).
+      </p>
+
+      <!-- Video Player for Carved Fragment -->
+      <div style="position: relative; width: 100%; height: 280px; background: #000; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-subtle); margin-bottom: var(--space-3);">
+        <video id="carved-fragment-video" playsinline controls loop autoplay muted style="width: 100%; height: 100%; object-fit: cover; display: none;"></video>
+        <canvas id="carved-fragment-canvas" width="600" height="280" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
+        <div style="position: absolute; top: 12px; left: 12px; font-family: var(--font-mono); font-size: 11px; color: #FFFFFF; text-shadow: 1px 1px 3px #000; background: rgba(0,0,0,0.65); padding: 2px 8px; border-radius: 2px; z-index: 10;">
+          <span id="carved-watermark-cam">CH 01</span> | <span id="carved-watermark-time">10:15:00.000 - 10:15:04.000 UTC</span>
+        </div>
+        <div style="position: absolute; bottom: 12px; right: 12px; font-family: var(--font-mono); font-size: 10px; color: #34D399; background: rgba(0,0,0,0.75); padding: 2px 6px; border: 1px solid #34D399; border-radius: 2px; z-index: 10;">
+          RECONSTRUCTED (NAL 0x67 KEYFRAME VALID)
+        </div>
+      </div>
+
+      <!-- Scrubber and Slice Controls -->
+      <div class="carved-modal-scrubber-wrap">
+        <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">
+          <span id="carved-slice-source">SOURCE: Original Video Bitstream Slice</span>
+          <span id="carved-slice-timer" style="color: #FBBF24;">0.0s / 4.0s</span>
+        </div>
+        <div class="carved-modal-scrubber-bar" id="carved-modal-scrub-bar">
+          <div class="carved-modal-scrubber-fill" id="carved-modal-scrub-fill"></div>
+        </div>
+        <div style="display: flex; gap: var(--space-2); margin-top: 4px; align-items: center;">
+          <button type="button" class="ctrl-btn active" id="carved-play-pause-btn" style="padding: 2px 8px; font-size: 11px;">⏸ Pause</button>
+          <button type="button" class="ctrl-btn" id="carved-replay-btn" style="padding: 2px 8px; font-size: 11px;">⏮ Replay Slice</button>
+          <span style="font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-left: auto;">AUTO-LOOPING SLICE</span>
+        </div>
+      </div>
+
+      <!-- Forensics Meta Grid -->
+      <div style="background-color: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-subtle); padding: var(--space-3) var(--space-4); border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: var(--text-xs); margin-bottom: var(--space-5); line-height: 1.8;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
+          <div>Cluster Offset: <strong id="carved-meta-offset" style="color: var(--text-primary);">0x004F8200 - 0x008D1900</strong></div>
+          <div>Carve Confidence: <strong id="carved-meta-confidence" style="color: var(--status-verified);">97.4% (IDR Intact)</strong></div>
+          <div>Codec / Geometry: <span id="carved-meta-format" style="color: var(--text-secondary);">H.264 / 1920x1080 (25 FPS)</span></div>
+          <div>Slice Payload: <span id="carved-meta-duration" style="color: var(--text-secondary);">00:13:44 (Carved Slack)</span></div>
+        </div>
+        <!-- Normalized Timestamp Comparison Box -->
+        <div style="margin-top: 6px; padding: 6px 10px; background: rgba(59, 130, 246, 0.07); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: var(--radius-sm); font-size: 11px;">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 2px;">
+            <span style="color: var(--text-muted);">RAW OEM PTS (CAMERA RTC):</span>
+            <span id="carved-meta-raw-time" style="color: #FFFFFF;">2026-09-18 10:11:46.000 (Drift: +03m 14s)</span>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span style="color: #93C5FD; font-weight: 600;">NORMALIZED UTC STANDARD:</span>
+            <span id="carved-meta-norm-time" style="color: #60A5FA; font-weight: 700;">2026-09-18 10:15:00.000 UTC [NTP CALIBRATED]</span>
+          </div>
+        </div>
+        <div style="margin-top: 6px; border-top: 1px solid var(--border-muted); padding-top: 4px; word-break: break-all;">
+          Fragment SHA-256: <span id="carved-meta-sha256" style="color: var(--text-dim);">f489b0134cd98162541a783b65287f34a10e74b967198d0234ac871b65e90341</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: var(--space-3); flex-wrap: wrap;">
+        <button type="button" class="btn btn-primary btn-sm" id="btn-download-carved-clip" style="flex: 1;">
+          ⬇ Download Recovered MP4 Clip
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-download-carved-cert" style="flex: 1;">
+          Export Fragment Certificate
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" id="carved-modal-close-btn">
+          Close Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       GLOBAL FOOTER WITH LEGAL LINKS
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div>
+        <strong style="color: var(--text-primary);">BRUCH.DFA</strong> — Standardized Digital Evidence Suite
+      </div>
+      <div style="display: flex; gap: var(--space-4); flex-wrap: wrap;">
+        <a href="#privacy" style="color: var(--text-muted); font-size: var(--text-xs);">Privacy Policy</a>
+        <a href="#terms" style="color: var(--text-muted); font-size: var(--text-xs);">Terms & Conditions</a>
+        <a href="#login" style="color: var(--text-muted); font-size: var(--text-xs);">Examiner Portal</a>
+      </div>
+      <div>
+        Compliant with ISO/IEC 27037:2012 & FRE 902(13)/(14)
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       COOKIE & EVIDENTIARY SESSION CONSENT BANNER
+       ========================================================================= -->
+  <div class="cookie-consent-bar" id="cookie-consent-banner" role="region" aria-label="Evidentiary Session Consent">
+    <div class="container cookie-bar-container">
+      <div class="cookie-text-block">
+        <div class="cookie-title">Evidentiary & Cryptographic Session Consent</div>
+        <p class="cookie-desc">
+          This workstation utilizes essential cryptographic session tokens and local storage artifacts to preserve chain of custody, verify investigator credentials, and enforce ISO/IEC 27037:2012 non-tampering compliance. Zero third-party marketing cookies or external tracking scripts are deployed.
+        </p>
+      </div>
+      <div class="cookie-actions-group">
+        <button type="button" class="btn btn-primary btn-sm" id="btn-cookie-accept">Accept Session Tokens</button>
+        <button type="button" class="btn btn-outline btn-sm" id="btn-cookie-essential">Essential Only</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FLOATING FORENSIC AI CHATBOT WIDGET (BRUCH.DFA COPILOT)
+       ========================================================================= -->
+  <button type="button" class="chatbot-trigger-btn" id="chatbot-trigger-btn" aria-label="Open BRUCH.DFA AI Assistant">
+    <span class="chatbot-pulse-dot"></span>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
+    <span>Forensic AI Copilot</span>
+  </button>
+
+  <div class="chatbot-window hidden" id="chatbot-window" role="dialog" aria-modal="true" aria-label="Forensic AI Copilot">
+    <div class="chatbot-header">
+      <div class="chatbot-title-box">
+        <span class="chatbot-pulse-dot"></span>
+        <div>
+          <div class="chatbot-name">BRUCH.DFA Forensic Copilot</div>
+          <div class="chatbot-status" style="color: #CBD5E1;">● Live Gemini 3.6-Flash LLM Connected</div>
+        </div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <button type="button" class="btn btn-outline btn-sm" id="btn-set-gemini-key" style="padding: 1px 7px; font-size: 10px; color: #FFFFFF; border-color: rgba(255,255,255,0.25);">🔑 API Key</button>
+        <button type="button" class="chatbot-close-btn" id="chatbot-close-btn" aria-label="Close Chatbot">&times;</button>
+      </div>
+    </div>
+
+    <!-- Quick Question Chips -->
+    <div class="chatbot-chips-bar" id="chatbot-chips-bar">
+      <button type="button" class="chatbot-chip" data-query="How does timestamp normalization work in court under ISO 27037?">⏱️ Timestamp Normalization</button>
+      <button type="button" class="chatbot-chip" data-query="Explain Federal Rules of Evidence FRE 902(13) and (14) self-authentication.">⚖️ FRE 902 Admissibility</button>
+      <button type="button" class="chatbot-chip" data-query="What is carved unallocated slack space in surveillance DVRs?">🧩 Carved Slack Space</button>
+      <button type="button" class="chatbot-chip" data-query="Analyze current active case integrity and cryptographic hash verification.">🔍 Analyze Active Case</button>
+      <button type="button" class="chatbot-chip" data-query="How do I inspect H.264 NAL keyframes (SPS/PPS 0x0000000167)?">🎥 Inspect H.264 NAL Headers</button>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chatbot-messages-container" id="chatbot-messages">
+      <div class="chat-bubble chat-bubble-bot">
+        Greetings Examiner. I am <strong>BRUCH.DFA Forensic Copilot</strong>, powered live by <strong>Google Gemini 3.6-Flash LLM</strong>.
+        <br><br>
+        Your Gemini API key is activated and running. I can conduct in-depth forensic evaluations on DVR/NVR proprietary structures (Dahua DHFS, Hikvision HikFS), unallocated keyframe carving, presentation timestamp (PTS) drift normalization, and chain-of-custody self-authentication under <strong>FRE 902(13)/(14)</strong>.
+        <br><br>
+        Click any prompt chip above or ask any digital forensics question below!
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chatbot-input-bar">
+      <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Ask forensic question or case query..." autocomplete="off">
+      <button type="button" class="chatbot-send-btn" id="chatbot-send-btn">Send</button>
+    </div>
+  </div>
+
+  <!-- Optional Local Configuration (Ignored by Git) -->
+  <script src="js/config.local.js" onerror="this.remove()"></script>
+
+  <!-- Core Scripts -->
+  <script src="js/router.js"></script>
+  <script src="js/demo-engine.js"></script>
+  <script src="js/docs.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
